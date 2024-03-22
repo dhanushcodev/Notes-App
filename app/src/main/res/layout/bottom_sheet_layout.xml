@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:gravity="center_horizontal"
+    android:padding="10dp"
+    android:layout_height="match_parent">
+
+    <View
+        android:layout_width="30dp"
+        android:layout_height="4dp"
+        android:background="@drawable/horizontal_oval"
+        android:layout_marginBottom="10dp">
+
+    </View>
+
+    <TextView
+        android:id="@+id/deleteNote"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="10dp"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        android:text="Delete"/>
+
+    <TextView
+        android:id="@+id/shareNote"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="10dp"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        android:text="Share"/>
+
+</LinearLayout>
+</layout>
