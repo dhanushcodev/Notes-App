@@ -3,6 +3,7 @@ package com.example.notes.adapter
 import android.graphics.Color
 import android.graphics.PorterDuff
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.AsyncListDiffer
@@ -51,6 +52,9 @@ class NoteAdapter() : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
 
         val currentNote = differ.currentList.asReversed()[position]
+        if (currentNote.noteTitle.isEmpty()){
+            holder.itemBinding.textviewNoteTitle.visibility = View.GONE
+        }
         holder.itemBinding.textviewNoteTitle.text = currentNote.noteTitle
         holder.itemBinding.textviewNoteSubtitle.text = currentNote.noteSubtitle
         holder.itemBinding.textviewNoteContent.text = currentNote.noteContent
