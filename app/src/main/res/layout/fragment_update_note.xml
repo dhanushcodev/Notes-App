@@ -5,10 +5,10 @@
 
 
 <androidx.constraintlayout.widget.ConstraintLayout
+    style="@style/mainBackground"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="10dp"
-    android:background="#F3F4F6"
     tools:context=".fragments.UpdateNoteFragment">
 
 
@@ -24,38 +24,39 @@
         tools:ignore="MissingConstraints">
 
         <androidx.cardview.widget.CardView
+            style="@style/cardViewStyle"
             android:id="@+id/delete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/primary_dark"
             app:cardCornerRadius="25dp"
             app:cardElevation="0dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
+                style="@style/iconStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
-                android:src="@drawable/ic_more_black" />
+                app:srcCompat="@drawable/ic_more_black" />
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
+            style="@style/cardViewStyle"
             android:id="@+id/done"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/primary_dark"
             app:cardCornerRadius="25dp"
             app:cardElevation="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" >
 
-            <ImageView
-
+            <androidx.appcompat.widget.AppCompatImageView
+                style="@style/iconStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
-                android:src="@drawable/ic_done_black"
+                app:srcCompat="@drawable/ic_done_black"
                 />
 
         </androidx.cardview.widget.CardView>
@@ -85,13 +86,13 @@
 
 
             <EditText
+                style="@style/textViewStyle"
                 android:id="@+id/edit_title_update"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:background="@android:color/transparent"
                 android:hint="Title"
-                android:textColor="@android:color/black"
                 android:inputType="textMultiLine"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
@@ -123,6 +124,7 @@
 
 
             <EditText
+                style="@style/textViewStyle"
                 android:id="@+id/edit_note_update"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -136,7 +138,6 @@
                 android:paddingTop="10dp"
                 android:paddingRight="10dp"
                 android:paddingBottom="15dp"
-                android:textColor="#000000"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"

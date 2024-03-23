@@ -77,8 +77,8 @@ class NewNoteFragment : Fragment(R.layout.fragment_new_note) {
             mview.findNavController().popBackStack(R.id.homeFragment,true)
         }
         else{
-                Toast.makeText(mview.context,"Note is Empty",Toast.LENGTH_SHORT).show()
-//            Snackbar.make(mview,"Note is Empty",Snackbar.LENGTH_SHORT).show()
+//                Toast.makeText(mview.context,"Note is Empty",Toast.LENGTH_SHORT).show()
+            Snackbar.make(mview,"Note is Empty",Snackbar.LENGTH_SHORT).show()
         }
 
 
