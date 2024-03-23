@@ -1,12 +1,10 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.Notes" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
-<!--        <item name="android:statusBarColor">#F3F4F6</item>-->
+
+        <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
 
-    <style name="Theme.Notes" parent="Base.Theme.Notes" />
     <style name="mainBackground">
         <item name="android:background">#F3F4F6</item>
     </style>
@@ -23,7 +21,7 @@
         <item name="android:tint">@color/black</item>
     </style>
     <style name="floatingActionStyle">
-        <item name="android:src">@drawable/ic_add_black</item>
+        <item name="srcCompat">@drawable/ic_add_black</item>
         <item name="android:backgroundTint">#E4E5E9</item>
     </style>
 
