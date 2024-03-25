@@ -28,6 +28,9 @@ class SettingsActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+        binding.back.setOnClickListener{
+            finish()
+        }
 
         sharedPreferences =
             this.getSharedPreferences("isBiometricEnabled", Context.MODE_PRIVATE) ?: return
@@ -47,15 +50,14 @@ class SettingsActivity : AppCompatActivity() {
             binding.bioSwitch.isChecked = true
         }
 
-        var biometricPromptManager: BiometricPromptManager? =
+        var biometricPromptManager: BiometricPromptManager =
             BiometricPromptManager(this, executor, onSuccess, onFail, onError)
         binding.bioSwitch.isChecked = isBio
         binding.bioSwitch.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 sharedPreferences.edit().putBoolean("isBiometricEnabled", true).apply()
-                biometricPromptManager = null
             } else {
-                biometricPromptManager!!.showPrompt()
+                biometricPromptManager.showPrompt()
             }
         }
     }
