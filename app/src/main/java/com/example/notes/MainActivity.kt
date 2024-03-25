@@ -19,17 +19,14 @@ class MainActivity : AppCompatActivity() {
         enableEdgeToEdge()
         binding = ActivityMainBinding.inflate(LayoutInflater.from(this))
         setContentView(binding.root)
-
         setUpViewModel()
-//        window.statusBarColor = ContextCompat.getColor(this, R.color.statusBar)
     }
 
     private fun setUpViewModel() {
         val noteRepository = NoteRepository(NoteDatabase(this))
-        val viewModelProviderFactory = NoteViewModelFactory(app= application,noteRepository)
+        val viewModelProviderFactory = NoteViewModelFactory(app = application, noteRepository)
         noteViewModel = ViewModelProvider(
-            this,
-            viewModelProviderFactory
+            this, viewModelProviderFactory
         ).get(NoteViewModel::class.java)
 
 

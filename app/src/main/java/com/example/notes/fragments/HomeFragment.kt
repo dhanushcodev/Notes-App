@@ -30,8 +30,8 @@ import com.example.notes.viewmodel.NoteViewModel
 import kotlin.math.log
 
 
-class HomeFragment : Fragment(R.layout.fragment_home),
-    SearchView.OnQueryTextListener, AdapterView.OnItemClickListener {
+class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextListener,
+    AdapterView.OnItemClickListener {
 
     var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
@@ -42,39 +42,18 @@ class HomeFragment : Fragment(R.layout.fragment_home),
 
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        val popupMenu = PopupMenu(context,binding.mainMenu)
-//        popupMenu.inflate(R.menu.menu)
-//        popupMenu.setOnMenuItemClickListener { item ->
-//            val itemId = item.itemId
-//            when (itemId) {
-//                R.id.menu_item_settings -> {
-//                    // Handle click on item 1
-//                    return@setOnMenuItemClickListener true
-//                }
-//                R.id.menu_item_about -> {
-//                    // Handle click on item 2
-//                    return@setOnMenuItemClickListener true
-//                }
-//                // ... handle other items
-//                else -> false
-//            }
-//        }
-//        binding.mainMenu.setOnClickListener {
-//            popupMenu.show()
-//        }
+
         val inflater = LayoutInflater.from(context)
         val layout = inflater.inflate(R.layout.custom_menu, null)
-        popupWindow = PopupWindow(layout,600,WindowManager.LayoutParams.WRAP_CONTENT,true)
+        popupWindow = PopupWindow(layout, 600, WindowManager.LayoutParams.WRAP_CONTENT, true)
         val menuList = layout.findViewById<ListView>(R.id.menu_list)
         val data = ArrayList<String>()
         data.add("Settings")
@@ -82,31 +61,30 @@ class HomeFragment : Fragment(R.layout.fragment_home),
         val context = context
         val menuAdapter = ArrayAdapter(context!!, android.R.layout.simple_list_item_1, data)
         menuList.adapter = menuAdapter
-        menuList.setOnItemClickListener(this)
+        menuList.onItemClickListener = this
         popupWindow.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         popupWindow.isOutsideTouchable = true
-        binding.mainMenu.setOnClickListener{
+        binding.mainMenu.setOnClickListener {
             popupWindow.showAsDropDown(it)
         }
         notesViewModel = (activity as MainActivity).noteViewModel
         binding.searchBar.setOnQueryTextListener(this)
         noteAdapter = NoteAdapter()
-        sharedPreferences = context?.getSharedPreferences("layout_preference", Context.MODE_PRIVATE) ?: return
+        sharedPreferences =
+            context.getSharedPreferences("layout_preference", Context.MODE_PRIVATE) ?: return
 
         binding.addNote.setOnClickListener {
             it.findNavController().navigate(
                 R.id.action_homeFragment_to_newNoteFragment
             )
-//            it.findNavController().popBackStack(R.id.newNoteFragment,true)
         }
         binding.notesList.apply {
-           var value= sharedPreferences.getBoolean("layout_preference",false)
+            var value = sharedPreferences.getBoolean("layout_preference", false)
             Log.d("listStyle", value.toString())
             if (!value) {
                 layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
                 binding.listStyle.setImageResource(R.drawable.ic_list_black)
-            }
-            else{
+            } else {
                 layoutManager = LinearLayoutManager(context)
                 binding.listStyle.setImageResource(R.drawable.ic_grid_black)
             }
@@ -115,13 +93,15 @@ class HomeFragment : Fragment(R.layout.fragment_home),
 
         }
         binding.listStyle.setOnClickListener {
-           if(binding.notesList.layoutManager is StaggeredGridLayoutManager){
-               binding.listStyle.setImageResource(R.drawable.ic_grid_black)
-               binding.notesList.layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
-           }else{
-               binding.notesList.layoutManager = StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL)
-               binding.listStyle.setImageResource(R.drawable.ic_list_black)
-           }
+            if (binding.notesList.layoutManager is StaggeredGridLayoutManager) {
+                binding.listStyle.setImageResource(R.drawable.ic_grid_black)
+                binding.notesList.layoutManager =
+                    LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            } else {
+                binding.notesList.layoutManager =
+                    StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+                binding.listStyle.setImageResource(R.drawable.ic_list_black)
+            }
 
             saveLayoutPreference(binding.notesList.layoutManager is LinearLayoutManager)
         }
@@ -135,30 +115,23 @@ class HomeFragment : Fragment(R.layout.fragment_home),
 
     private fun setUpRecyclerView() {
 
-//        Access to Activity: A Fragment can access its parent Activity through the activity property. This property is of type Activity?, meaning it could be null if the Fragment isn't properly attached to an Activity.
-//        Safe Call Operator (?.): The code uses the safe call operator ?. before accessing the activity's properties like noteViewModel. This ensures the code doesn't crash if the Fragment is not yet associated with an Activity (which could happen during specific lifecycle stages).
-//        The HomeFragment likely needs to interact with the noteViewModel which is probably initialized or created in the MainActivity.
-//        By using activity?.let{}, the code safely retrieves the MainActivity instance (if it exists) and then accesses its noteViewModel property.
-
-           activity?.let {
+        activity?.let {
             notesViewModel.getAllNotes().observe(
                 viewLifecycleOwner
             ) {
                 noteAdapter.differ.submitList(it)
-                if(it.isEmpty()){
+                if (it.isEmpty()) {
                     updateUI()
                 }
 
             }
-           }
-
-
+        }
     }
 
     private fun updateUI() {
-                binding.emptyList.visibility = View.VISIBLE
-                binding.notesList.visibility = View.GONE
-        }
+        binding.emptyList.visibility = View.VISIBLE
+        binding.notesList.visibility = View.GONE
+    }
 
 
     override fun onQueryTextSubmit(query: String?): Boolean {
@@ -177,27 +150,25 @@ class HomeFragment : Fragment(R.layout.fragment_home),
     private fun searchNote(query: String?) {
         val searchQuery = "%$query%"
         notesViewModel.searchNote(searchQuery).observe(
-            this,
-            {
-                list -> noteAdapter.differ.submitList(list)
-//                binding.notesList.adapter = NoteAdapter(it)
-            }
-        )
+            this
+        ) { list ->
+            noteAdapter.differ.submitList(list)
+        }
     }
 
     override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        if (position == 0){
-            val intent = Intent(context,SettingsActivity::class.java)
+        if (position == 0) {
+            val intent = Intent(context, SettingsActivity::class.java)
             startActivity(intent)
             popupWindow.dismiss()
         }
 
     }
 
-//    override fun onDestroy() {
-//        super.onDestroy()
-//        _binding = null
-//    }
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
 
 }
 
