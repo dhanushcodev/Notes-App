@@ -63,5 +63,5 @@ dependencies {
     annotationProcessor(libs.androidx.room.compiler)
     kapt(libs.androidx.lifecycle.compiler)
     kapt(libs.androidx.room.compiler)
-//    implementation("com.android.support:design:28.0.0")
+    implementation("androidx.biometric:biometric:1.1.0")
 }

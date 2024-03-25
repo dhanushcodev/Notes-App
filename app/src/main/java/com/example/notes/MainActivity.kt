@@ -19,6 +19,7 @@ class MainActivity : AppCompatActivity() {
         enableEdgeToEdge()
         binding = ActivityMainBinding.inflate(LayoutInflater.from(this))
         setContentView(binding.root)
+
         setUpViewModel()
 //        window.statusBarColor = ContextCompat.getColor(this, R.color.statusBar)
     }

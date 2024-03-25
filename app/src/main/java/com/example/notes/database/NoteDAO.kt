@@ -23,6 +23,6 @@ interface NoteDAO {
     @Query("SELECT * FROM notes")
     fun getAllNotes() : LiveData<List<Note>>
 
-    @Query("SELECT * FROM notes WHERE noteTitle LIKE :query or noteContent LIKE :query or noteSubtitle LIKE :query")
+    @Query("SELECT * FROM notes WHERE LOWER(noteTitle) LIKE LOWER(:query) or LOWER(noteContent) LIKE LOWER(:query)")
     fun searchNote(query: String?) : LiveData<List<Note>>
 }
