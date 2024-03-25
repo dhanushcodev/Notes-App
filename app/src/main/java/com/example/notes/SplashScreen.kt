@@ -12,7 +12,6 @@ import com.example.notes.biometric.BiometricPromptManager
 import java.util.concurrent.Executor
 
 class SplashScreen : AppCompatActivity() {
-    lateinit var executor: Executor
     private lateinit var sharedPreferences: SharedPreferences
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,7 +20,6 @@ class SplashScreen : AppCompatActivity() {
         sharedPreferences =
             this.getSharedPreferences("isBiometricEnabled", Context.MODE_PRIVATE) ?: return
         val isBio = sharedPreferences.getBoolean("isBiometricEnabled", false)
-        executor = ContextCompat.getMainExecutor(this)
 
         val onSucess = {
             val intent = Intent(applicationContext, MainActivity::class.java)
@@ -35,7 +33,7 @@ class SplashScreen : AppCompatActivity() {
             finish()
         }
         var biometricPrompt: BiometricPromptManager? =
-            BiometricPromptManager(this, executor, onSucess, onFail, onError)
+            BiometricPromptManager(this, onSucess, onFail, onError)
 
         if (isBio) {
             biometricPrompt!!.showPrompt()

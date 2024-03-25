@@ -35,9 +35,9 @@ class SettingsActivity : AppCompatActivity() {
         sharedPreferences =
             this.getSharedPreferences("isBiometricEnabled", Context.MODE_PRIVATE) ?: return
         val isBio = sharedPreferences.getBoolean("isBiometricEnabled", false)
-        executor = ContextCompat.getMainExecutor(this)
 
         val onSuccess = {
+            binding.bioSwitch.isChecked = false
             sharedPreferences.edit().putBoolean("isBiometricEnabled", false).apply()
         }
 
@@ -51,7 +51,7 @@ class SettingsActivity : AppCompatActivity() {
         }
 
         var biometricPromptManager: BiometricPromptManager =
-            BiometricPromptManager(this, executor, onSuccess, onFail, onError)
+            BiometricPromptManager(this, onSuccess, onFail, onError)
         binding.bioSwitch.isChecked = isBio
         binding.bioSwitch.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {

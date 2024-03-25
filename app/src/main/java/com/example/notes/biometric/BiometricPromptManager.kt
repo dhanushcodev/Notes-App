@@ -6,15 +6,16 @@ import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricManager.Authenticators.BIOMETRIC_STRONG
 import androidx.biometric.BiometricManager.Authenticators.DEVICE_CREDENTIAL
 import androidx.biometric.BiometricPrompt
+import androidx.core.content.ContextCompat
 import java.util.concurrent.Executor
 
 class BiometricPromptManager(
     private val activity: AppCompatActivity,
-    private val executor: Executor,
     val onSucessOperation: () -> Unit,
     val onFailureOperation: () -> Unit,
     val onErrorOperation: () -> Unit
 ) {
+    val executor = ContextCompat.getMainExecutor(activity)
     fun showPrompt() {
         val biometricManager = BiometricManager.from(activity)
         val canAuthenticate = biometricManager.canAuthenticate(BIOMETRIC_STRONG)
