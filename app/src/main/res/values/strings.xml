@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Note</string>
+    <string-array name="theme_array">
+        <item>System</item>
+        <item>Light</item>
+        <item>Dark</item>
+    </string-array>
 </resources>

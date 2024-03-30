@@ -7,9 +7,8 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
+import androidx.appcompat.app.AppCompatDelegate
 import com.example.notes.biometric.BiometricPromptManager
-import java.util.concurrent.Executor
 
 class SplashScreen : AppCompatActivity() {
     private lateinit var sharedPreferences: SharedPreferences
@@ -17,11 +16,18 @@ class SplashScreen : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_splash_screen)
+
         sharedPreferences =
-            this.getSharedPreferences("isBiometricEnabled", Context.MODE_PRIVATE) ?: return
+            this.getSharedPreferences("Note_preference", Context.MODE_PRIVATE) ?: return
+
+        val theme =
+            sharedPreferences.getInt("themeMode", AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+        AppCompatDelegate.setDefaultNightMode(theme)
+
+
         val isBio = sharedPreferences.getBoolean("isBiometricEnabled", false)
 
-        val onSucess = {
+        val onSuccess = {
             val intent = Intent(applicationContext, MainActivity::class.java)
             startActivity(intent)
             finish()
@@ -33,7 +39,7 @@ class SplashScreen : AppCompatActivity() {
             finish()
         }
         var biometricPrompt: BiometricPromptManager? =
-            BiometricPromptManager(this, onSucess, onFail, onError)
+            BiometricPromptManager(this, onSuccess, onFail, onError)
 
         if (isBio) {
             biometricPrompt!!.showPrompt()

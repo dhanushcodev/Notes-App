@@ -3,22 +3,22 @@ package com.example.notes
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
 import com.example.notes.biometric.BiometricPromptManager
 import com.example.notes.databinding.ActivitySettingsBinding
-import java.util.concurrent.Executor
 
-class SettingsActivity : AppCompatActivity() {
+class SettingsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     lateinit var binding: ActivitySettingsBinding
     private lateinit var sharedPreferences: SharedPreferences
-    lateinit var executor: Executor
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -28,17 +28,27 @@ class SettingsActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        binding.back.setOnClickListener{
+        sharedPreferences =
+            this.getSharedPreferences("Note_preference", Context.MODE_PRIVATE) ?: return
+        binding.back.setOnClickListener {
             finish()
         }
 
-        sharedPreferences =
-            this.getSharedPreferences("isBiometricEnabled", Context.MODE_PRIVATE) ?: return
+        val adapter = ArrayAdapter.createFromResource(
+            this, R.array.theme_array, android.R.layout.simple_spinner_item
+        )
+
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.themeSpinner.adapter = adapter
+        binding.themeSpinner.setSelection(getThemeSlected())
+        binding.themeSpinner.onItemSelectedListener = this
+
+
         val isBio = sharedPreferences.getBoolean("isBiometricEnabled", false)
 
         val onSuccess = {
-            binding.bioSwitch.isChecked = false
             sharedPreferences.edit().putBoolean("isBiometricEnabled", false).apply()
+            binding.bioSwitch.isChecked = false
         }
 
         val onFail = {
@@ -50,16 +60,51 @@ class SettingsActivity : AppCompatActivity() {
             binding.bioSwitch.isChecked = true
         }
 
-        var biometricPromptManager: BiometricPromptManager =
-            BiometricPromptManager(this, onSuccess, onFail, onError)
+        var biometricPromptManager = BiometricPromptManager(this, onSuccess, onFail, onError)
         binding.bioSwitch.isChecked = isBio
         binding.bioSwitch.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 sharedPreferences.edit().putBoolean("isBiometricEnabled", true).apply()
             } else {
-                biometricPromptManager.showPrompt()
+                if (sharedPreferences.getBoolean(
+                        "isBiometricEnabled",
+                        false
+                    )
+                ) biometricPromptManager.showPrompt()
             }
         }
+    }
+
+
+    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        val selectedItem = parent?.getItemAtPosition(position) as String
+        if (selectedItem.equals("system", true)) {
+            sharedPreferences.edit().putInt("themeMode", AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+                .apply()
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+        } else if (selectedItem.equals("light", true)) {
+            sharedPreferences.edit().putInt("themeMode", AppCompatDelegate.MODE_NIGHT_NO).apply()
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        } else {
+            sharedPreferences.edit().putInt("themeMode", AppCompatDelegate.MODE_NIGHT_YES).apply()
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        }
+    }
+
+    fun getThemeSlected(): Int {
+        val theme =
+            sharedPreferences.getInt("themeMode", AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+        if (theme == AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM) {
+            return 0
+        } else if (theme == AppCompatDelegate.MODE_NIGHT_NO) {
+            return 1
+        } else {
+            return 2
+        }
+    }
+
+    override fun onNothingSelected(parent: AdapterView<*>?) {
+
     }
 
 }
