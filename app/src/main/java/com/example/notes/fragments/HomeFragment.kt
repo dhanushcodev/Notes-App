@@ -84,12 +84,14 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
             if (!value) {
                 layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
                 binding.listStyle.setImageResource(R.drawable.ic_list_black)
+                adapter = noteAdapter
             } else {
                 layoutManager = LinearLayoutManager(context)
                 binding.listStyle.setImageResource(R.drawable.ic_grid_black)
+                adapter = noteAdapter
             }
             setHasFixedSize(true)
-            adapter = noteAdapter
+//            adapter = noteAdapter
 
         }
         binding.listStyle.setOnClickListener {
@@ -97,10 +99,12 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
                 binding.listStyle.setImageResource(R.drawable.ic_grid_black)
                 binding.notesList.layoutManager =
                     LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+                binding.notesList.adapter = noteAdapter
             } else {
                 binding.notesList.layoutManager =
                     StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
                 binding.listStyle.setImageResource(R.drawable.ic_list_black)
+                binding.notesList.adapter = noteAdapter
             }
 
             saveLayoutPreference(binding.notesList.layoutManager is LinearLayoutManager)
