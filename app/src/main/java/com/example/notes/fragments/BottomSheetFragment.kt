@@ -18,7 +18,8 @@ import com.google.android.material.snackbar.Snackbar
 class BottomSheetFragment(
     val parentView: View,
     val notesViewModel: NoteViewModel,
-    val currentNote: Note
+    val currentNote: Note,
+    val from: String
 ) : BottomSheetDialogFragment() {
     lateinit var binding: BottomSheetLayoutBinding
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,8 +59,11 @@ class BottomSheetFragment(
         val deleteButton = customView.findViewById<Button>(R.id.delete_btn)
         deleteButton.setOnClickListener {
             notesViewModel.deleteNote(currentNote)
-            parentView.findNavController().navigate(R.id.action_updateNoteFragment_to_homeFragment)
-            parentView.findNavController().popBackStack(R.id.homeFragment, true)
+            if(from=="UpdateActivity"){
+                parentView.findNavController().navigate(R.id.action_updateNoteFragment_to_homeFragment)
+                parentView.findNavController().popBackStack(R.id.homeFragment, true)
+            }
+
             Snackbar.make(parentView, "Note Deleted", Snackbar.LENGTH_SHORT).show()
             dialog.dismiss()
         }

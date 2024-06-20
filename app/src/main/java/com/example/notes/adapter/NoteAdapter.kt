@@ -13,7 +13,8 @@ import com.example.notes.databinding.NoteItemBinding
 import com.example.notes.fragments.HomeFragmentDirections
 import com.example.notes.model.Note
 
-class NoteAdapter : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
+class NoteAdapter(val onLongPress:(Note)->Unit) : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
+
 
 
     data class NoteViewHolder(val itemBinding: NoteItemBinding) :
@@ -80,6 +81,11 @@ class NoteAdapter : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
             val direction =
                 HomeFragmentDirections.actionHomeFragmentToUpdateNoteFragment(currentNote)
             it.findNavController().navigate(direction)
+        }
+
+        holder.itemView.setOnLongClickListener{
+            onLongPress(currentNote)
+            true
         }
     }
 

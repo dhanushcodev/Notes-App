@@ -16,6 +16,7 @@ import android.widget.ArrayAdapter
 
 import android.widget.ListView
 import android.widget.PopupWindow
+import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
@@ -26,6 +27,7 @@ import com.example.notes.R
 import com.example.notes.SettingsActivity
 import com.example.notes.adapter.NoteAdapter
 import com.example.notes.databinding.FragmentHomeBinding
+import com.example.notes.model.Note
 import com.example.notes.viewmodel.NoteViewModel
 import kotlin.math.log
 
@@ -48,6 +50,17 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
         return binding.root
     }
 
+    val onLongPress:(currentNote:Note,)->Unit = {
+        view?.let { it1 -> showBottomSheet(it1, notesViewModel, it) }
+//        binding.notesList.adapter = noteAdapter
+//         Toast.makeText(context,"toast",Toast.LENGTH_LONG).show()
+    }
+
+
+    fun showBottomSheet(view: View, noteViewModel: NoteViewModel, currentNote: Note) {
+        val bottomSheet = BottomSheetFragment(view, noteViewModel, currentNote,"HomeActivity")
+        bottomSheet.show(parentFragmentManager, "MyBottomSheet")
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -69,7 +82,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
         }
         notesViewModel = (activity as MainActivity).noteViewModel
         binding.searchBar.setOnQueryTextListener(this)
-        noteAdapter = NoteAdapter()
+        noteAdapter = NoteAdapter(onLongPress)
         sharedPreferences =
             context.getSharedPreferences("layout_preference", Context.MODE_PRIVATE) ?: return
 

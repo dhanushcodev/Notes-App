@@ -72,7 +72,7 @@ class UpdateNoteFragment : Fragment(R.layout.fragment_update_note) {
 
     }
     fun showBottomSheet(view: View, noteViewModel: NoteViewModel, currentNote: Note) {
-        val bottomSheet = BottomSheetFragment(view, noteViewModel, currentNote)
+        val bottomSheet = BottomSheetFragment(view, noteViewModel, currentNote,"UpdateActivity")
         bottomSheet.show(parentFragmentManager, "MyBottomSheet")
     }
 
