@@ -52,13 +52,15 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
 
     val onLongPress:(currentNote:Note,)->Unit = {
         view?.let { it1 -> showBottomSheet(it1, notesViewModel, it) }
-//        binding.notesList.adapter = noteAdapter
-//         Toast.makeText(context,"toast",Toast.LENGTH_LONG).show()
+
     }
 
+    val onDeletionComplete:()->Unit = {
+        setUpRecyclerView()
+    }
 
     fun showBottomSheet(view: View, noteViewModel: NoteViewModel, currentNote: Note) {
-        val bottomSheet = BottomSheetFragment(view, noteViewModel, currentNote,"HomeActivity")
+        val bottomSheet = BottomSheetFragment(view, noteViewModel, currentNote,"HomeActivity",onDeletionComplete)
         bottomSheet.show(parentFragmentManager, "MyBottomSheet")
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -137,6 +139,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
                 viewLifecycleOwner
             ) {
                 noteAdapter.differ.submitList(it)
+                noteAdapter.notifyDataSetChanged()
                 if (it.isEmpty()) {
                     updateUI()
                 }

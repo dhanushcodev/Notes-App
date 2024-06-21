@@ -19,7 +19,8 @@ class BottomSheetFragment(
     val parentView: View,
     val notesViewModel: NoteViewModel,
     val currentNote: Note,
-    val from: String
+    val from: String,
+    val onDeletionComplete: ()->Unit = {}
 ) : BottomSheetDialogFragment() {
     lateinit var binding: BottomSheetLayoutBinding
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,6 +65,7 @@ class BottomSheetFragment(
                 parentView.findNavController().popBackStack(R.id.homeFragment, true)
             }
 
+            onDeletionComplete()
             Snackbar.make(parentView, "Note Deleted", Snackbar.LENGTH_SHORT).show()
             dialog.dismiss()
         }
@@ -72,7 +74,9 @@ class BottomSheetFragment(
 
 
     fun shareText() {
-        val shareText = currentNote.noteContent
+        val shareTitle = currentNote.noteTitle
+        val shareContent = currentNote.noteContent
+        val shareText = shareTitle + "\n\n" + shareContent
         val shareIntent = Intent(Intent.ACTION_SEND)
         shareIntent.type = "text/plain"
         shareIntent.putExtra(Intent.EXTRA_TEXT, shareText)
