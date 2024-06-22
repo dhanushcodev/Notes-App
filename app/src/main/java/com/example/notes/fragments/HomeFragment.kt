@@ -1,5 +1,6 @@
 package com.example.notes.fragments
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -50,17 +51,13 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
         return binding.root
     }
 
-    val onLongPress:(currentNote:Note,)->Unit = {
-        view?.let { it1 -> showBottomSheet(it1, notesViewModel, it) }
-
+    val onLongPress:(currentNote:Note)->Unit = {note->
+        view?.let { it1 -> showBottomSheet(it1, notesViewModel,note ) }
     }
 
-    val onDeletionComplete:()->Unit = {
-        setUpRecyclerView()
-    }
 
     fun showBottomSheet(view: View, noteViewModel: NoteViewModel, currentNote: Note) {
-        val bottomSheet = BottomSheetFragment(view, noteViewModel, currentNote,"HomeActivity",onDeletionComplete)
+        val bottomSheet = BottomSheetFragment(view, noteViewModel, currentNote,"HomeActivity")
         bottomSheet.show(parentFragmentManager, "MyBottomSheet")
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -132,23 +129,24 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
         sharedPreferences.edit().putBoolean("layout_preference", isStaggered).apply()
     }
 
+
     private fun setUpRecyclerView() {
 
         activity?.let {
             notesViewModel.getAllNotes().observe(
                 viewLifecycleOwner
             ) {
-                noteAdapter.differ.submitList(it)
+                noteAdapter.updateNotes(it)
                 noteAdapter.notifyDataSetChanged()
                 if (it.isEmpty()) {
-                    updateUI()
+                    updateUIEmpty()
                 }
 
             }
         }
     }
 
-    private fun updateUI() {
+    private fun updateUIEmpty() {
         binding.emptyList.visibility = View.VISIBLE
         binding.notesList.visibility = View.GONE
     }
@@ -172,7 +170,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
         notesViewModel.searchNote(searchQuery).observe(
             this
         ) { list ->
-            noteAdapter.differ.submitList(list)
+            noteAdapter.updateNotes(list)
         }
     }
 

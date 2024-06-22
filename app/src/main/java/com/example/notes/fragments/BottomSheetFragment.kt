@@ -20,7 +20,6 @@ class BottomSheetFragment(
     val notesViewModel: NoteViewModel,
     val currentNote: Note,
     val from: String,
-    val onDeletionComplete: ()->Unit = {}
 ) : BottomSheetDialogFragment() {
     lateinit var binding: BottomSheetLayoutBinding
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,8 +63,6 @@ class BottomSheetFragment(
                 parentView.findNavController().navigate(R.id.action_updateNoteFragment_to_homeFragment)
                 parentView.findNavController().popBackStack(R.id.homeFragment, true)
             }
-
-            onDeletionComplete()
             Snackbar.make(parentView, "Note Deleted", Snackbar.LENGTH_SHORT).show()
             dialog.dismiss()
         }

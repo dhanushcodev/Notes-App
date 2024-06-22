@@ -6,51 +6,33 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
-import androidx.recyclerview.widget.AsyncListDiffer
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.notes.databinding.NoteItemBinding
 import com.example.notes.fragments.HomeFragmentDirections
 import com.example.notes.model.Note
 
-class NoteAdapter(val onLongPress:(Note)->Unit) : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
+class NoteAdapter(val onLongPress: (Note) -> Unit) :
+    RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
 
-
-
-    data class NoteViewHolder(val itemBinding: NoteItemBinding) :
+    inner class NoteViewHolder(val itemBinding: NoteItemBinding) :
         RecyclerView.ViewHolder(itemBinding.root)
 
-    // to calculate updates for recycler view adapter
-    private val differCallback = object : DiffUtil.ItemCallback<Note>() {
-
-        override fun areItemsTheSame(oldItem: Note, newItem: Note): Boolean {
-            return oldItem.id == newItem.id && oldItem.noteTitle == newItem.noteTitle && oldItem.noteSubtitle == newItem.noteSubtitle && oldItem.noteContent == newItem.noteContent
-        }
-
-        override fun areContentsTheSame(oldItem: Note, newItem: Note): Boolean {
-            return oldItem == newItem
-        }
-
-
-    }
-
-    val differ = AsyncListDiffer(this, differCallback)
+    private var notesList = emptyList<Note>() // List to hold your notes
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder {
         return NoteViewHolder(
             NoteItemBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false
-            )
-        )
+            ))
     }
 
     override fun getItemCount(): Int {
-        return differ.currentList.size
+        return notesList.size
     }
 
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
+        val currentNote = notesList[position]
 
-        val currentNote = differ.currentList.asReversed()[position]
         if (currentNote.noteTitle.isEmpty()) {
             holder.itemBinding.textviewNoteTitle.visibility = View.GONE
         }
@@ -58,8 +40,7 @@ class NoteAdapter(val onLongPress:(Note)->Unit) : RecyclerView.Adapter<NoteAdapt
         holder.itemBinding.textviewNoteSubtitle.text = currentNote.noteSubtitle
         holder.itemBinding.textviewNoteContent.text = currentNote.noteContent
 
-
-        var colors = mutableListOf(
+        val colors = listOf(
             getColor("#5d8aa8"),
             getColor("#e52b50"),
             getColor("#efdecd"),
@@ -71,9 +52,7 @@ class NoteAdapter(val onLongPress:(Note)->Unit) : RecyclerView.Adapter<NoteAdapt
             getColor("#ff9966")
         )
 
-
-        holder.itemBinding.noteColor.background.setColorFilter(
-            colors[position % colors.size],
+        holder.itemBinding.noteColor.background.setColorFilter(colors[position % colors.size],
             PorterDuff.Mode.SRC_IN
         )
 
@@ -83,15 +62,19 @@ class NoteAdapter(val onLongPress:(Note)->Unit) : RecyclerView.Adapter<NoteAdapt
             it.findNavController().navigate(direction)
         }
 
-        holder.itemView.setOnLongClickListener{
+        holder.itemView.setOnLongClickListener {
             onLongPress(currentNote)
             true
         }
     }
 
+    // Function to update the notes list and refresh the adapter
+    fun updateNotes(newNotes: List<Note>) {
+        notesList = newNotes
+        notifyDataSetChanged()
+    }
 
-    fun getColor(hex: String): Int {
+    private fun getColor(hex: String): Int {
         return Color.parseColor(hex)
-
     }
 }
