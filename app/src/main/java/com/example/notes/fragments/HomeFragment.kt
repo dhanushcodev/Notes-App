@@ -23,6 +23,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.example.notes.AboutActivity
 import com.example.notes.MainActivity
 import com.example.notes.R
 import com.example.notes.SettingsActivity
@@ -69,7 +70,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
         val menuList = layout.findViewById<ListView>(R.id.menu_list)
         val data = ArrayList<String>()
         data.add("Settings")
-//        data.add("About")
+        data.add("About")
         val context = context
         val menuAdapter = ArrayAdapter(context!!, android.R.layout.simple_list_item_1, data)
         menuList.adapter = menuAdapter
@@ -180,6 +181,11 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
             startActivity(intent)
             popupWindow.dismiss()
         }
+       if(position == 1){
+           val intent = Intent(context, AboutActivity::class.java)
+           startActivity(intent)
+           popupWindow.dismiss()
+       }
 
     }
 

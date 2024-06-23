@@ -11,6 +11,9 @@
     <style name="textViewStyle">
         <item name="android:textColor">@color/black</item>
     </style>
+    <style name="textViewStyleContent">
+        <item name="android:textColor">#E2000000</item>
+    </style>
     <style name="noteContentTextStyle">
         <item name="android:textColor">#565c4d</item>
     </style>

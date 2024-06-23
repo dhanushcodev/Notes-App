@@ -28,7 +28,7 @@
             android:id="@+id/delete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="25dp"
+            app:cardCornerRadius="15dp"
             app:cardElevation="0dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -37,7 +37,7 @@
                 style="@style/iconStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
+                android:layout_margin="10dp"
                 app:srcCompat="@drawable/ic_more_black" />
         </androidx.cardview.widget.CardView>
 
@@ -46,7 +46,7 @@
             android:id="@+id/done"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="25dp"
+            app:cardCornerRadius="15dp"
             app:cardElevation="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" >
@@ -55,7 +55,7 @@
                 style="@style/iconStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
+                android:layout_margin="10dp"
                 app:srcCompat="@drawable/ic_done_black"
                 />
 

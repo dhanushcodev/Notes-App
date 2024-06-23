@@ -62,6 +62,7 @@
             </LinearLayout>
 
             <TextView
+                style="@style/textViewStyleContent"
                 android:id="@+id/textview_note_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -70,7 +71,8 @@
                 android:ellipsize="end"
                 android:textSize="14sp"
                 android:maxLines="7"
-                android:text="Note" />
+                android:text="Note"
+                android:fontWeight="100"/>
 
             <TextView
                 android:id="@+id/textview_note_subtitle"
