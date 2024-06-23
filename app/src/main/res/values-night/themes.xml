@@ -29,7 +29,7 @@
         <item name="android:backgroundTint">#1e1e1e</item>
     </style>
     <style name="noteItemStyle">
-        <item name="android:backgroundTint">#2e2e2e</item>
+        <item name="android:backgroundTint">#252525</item>
     </style>
     <style name="CustomBottomSheetDialogTheme" parent="Theme.Material3.Dark.BottomSheetDialog">
         <item name="android:windowBackground">@android:color/transparent</item>

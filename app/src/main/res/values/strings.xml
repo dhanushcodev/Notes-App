@@ -5,4 +5,5 @@
         <item>Light</item>
         <item>Dark</item>
     </string-array>
+    <string name="html_link_text"><a href="https://github.com/dhanushcodev/Notes-App">GitHub Notes App</a></string>
 </resources>

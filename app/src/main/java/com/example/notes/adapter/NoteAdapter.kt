@@ -31,7 +31,7 @@ class NoteAdapter(val onLongPress: (Note) -> Unit) :
     }
 
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
-        val currentNote = notesList[position]
+        val currentNote = notesList.reversed()[position]
 
         if (currentNote.noteTitle.isEmpty()) {
             holder.itemBinding.textviewNoteTitle.visibility = View.GONE

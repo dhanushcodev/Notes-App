@@ -91,13 +91,16 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textStyle="bold"
-                        android:text="Designed and Developed By" />
+                        android:text="Open source project" />
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:paddingRight="10dp"
                                         android:gravity="start"
-                                        android:text="Dhanush kumar k"/>
+                                        android:text="https://github.com/dhanushcodev/Notes-App"
+                                        android:autoLink="web"
+                                        android:linksClickable="true"
+                                        />
                 </LinearLayout>
 
 
