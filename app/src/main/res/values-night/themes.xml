@@ -13,9 +13,6 @@
     <style name="textViewStyleContent">
         <item name="android:textColor">#CEFFFFFF</item>
     </style>
-    <style name="noteContentTextStyle">
-        <item name="android:textColor">@color/white</item>
-    </style>
     <style name="cardViewStyle">
         <item name="android:backgroundTint">#1e1e1e</item>
     </style>
