@@ -39,6 +39,9 @@
     <style name="CustomAlertDialogTheme" parent="Theme.Material3.Light.Dialog.Alert">
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>
+    <style name="CustomSpinner">
+        <item name="android:popupBackground">@drawable/spinner_background_white</item>
+    </style>
 
 
 </resources>

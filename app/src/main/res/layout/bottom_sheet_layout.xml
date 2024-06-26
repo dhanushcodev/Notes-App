@@ -13,7 +13,7 @@
     <View
         android:layout_width="30dp"
         android:layout_height="4dp"
-        android:background="@drawable/horizontal_oval"
+        android:background="@drawable/spinner_background_white"
         android:backgroundTint="@android:color/darker_gray"
         android:layout_marginBottom="10dp">
 

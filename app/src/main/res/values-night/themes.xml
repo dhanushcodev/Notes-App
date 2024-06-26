@@ -38,6 +38,8 @@
     <style name="CustomAlertDialogTheme" parent="Theme.Material3.Dark.Dialog.Alert">
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>
-
+    <style name="CustomSpinner">
+        <item name="android:popupBackground">@drawable/spinner_background_black</item>
+    </style>
 
 </resources>
