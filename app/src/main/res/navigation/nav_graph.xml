@@ -15,14 +15,18 @@
         <action
             android:id="@+id/action_homeFragment_to_newNoteFragment"
             app:destination="@id/newNoteFragment"
-            app:enterAnim="@anim/animate_to_left"
-            app:exitAnim="@anim/animate_to_right"
+            app:enterAnim="@anim/enter_left"
+            app:exitAnim="@anim/exit_left"
+            app:popEnterAnim="@anim/enter_right"
+            app:popExitAnim="@anim/exit_right"
             app:popUpTo="@id/homeFragment" />
         <action
             android:id="@+id/action_homeFragment_to_updateNoteFragment"
             app:destination="@id/updateNoteFragment"
-            app:enterAnim="@anim/animate_to_left"
-            app:exitAnim="@anim/animate_to_right"
+            app:enterAnim="@anim/enter_left"
+            app:exitAnim="@anim/exit_left"
+            app:popEnterAnim="@anim/enter_right"
+            app:popExitAnim="@anim/exit_right"
             app:popUpTo="@id/homeFragment" />
     </fragment>
     <fragment
