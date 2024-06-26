@@ -1,1 +1,1 @@
-Note Application made using koltin Data stored in Room db
+Note Application made using koltin Data stored using Room db
