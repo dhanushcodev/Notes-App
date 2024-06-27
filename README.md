@@ -1,1 +1,9 @@
-Note Application made using koltin Data stored using Room db
+Note Application made using kotlin.
+
+what i learnt creating this app?
+•Data binding
+•Room db
+•Navigation
+•Fragments
+•View Model and MVVM architecture
+
