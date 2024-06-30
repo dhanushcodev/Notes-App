@@ -64,4 +64,5 @@ dependencies {
     kapt(libs.androidx.lifecycle.compiler)
     kapt(libs.androidx.room.compiler)
     implementation("androidx.biometric:biometric:1.1.0")
+    implementation(kotlin("script-runtime"))
 }

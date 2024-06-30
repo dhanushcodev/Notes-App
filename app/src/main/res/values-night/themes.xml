@@ -16,6 +16,9 @@
     <style name="cardViewStyle">
         <item name="android:backgroundTint">#1e1e1e</item>
     </style>
+    <style name="popupViewStyle">
+        <item name="android:backgroundTint">#393939</item>
+    </style>
     <style name="iconStyle">
         <item name="android:tint">@color/white</item>
     </style>
@@ -26,7 +29,7 @@
         <item name="android:backgroundTint">#1e1e1e</item>
     </style>
     <style name="noteItemStyle">
-        <item name="android:backgroundTint">#252525</item>
+        <item name="android:backgroundTint">#272727</item>
     </style>
     <style name="CustomBottomSheetDialogTheme" parent="Theme.Material3.Dark.BottomSheetDialog">
         <item name="android:windowBackground">@android:color/transparent</item>
