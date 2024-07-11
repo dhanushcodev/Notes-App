@@ -10,8 +10,6 @@
         android:name="com.example.notes.fragments.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
-
-
         <action
             android:id="@+id/action_homeFragment_to_newNoteFragment"
             app:destination="@id/newNoteFragment"
@@ -39,6 +37,10 @@
             android:id="@+id/action_newNoteFragment_to_homeFragment"
             app:destination="@id/homeFragment"
             app:popUpTo="@id/newNoteFragment"
+            app:enterAnim="@anim/enter_left"
+            app:exitAnim="@anim/exit_left"
+            app:popEnterAnim="@anim/enter_right"
+            app:popExitAnim="@anim/exit_right"
             app:popUpToInclusive="true" />
     </fragment>
     <fragment
@@ -50,6 +52,10 @@
             android:id="@+id/action_updateNoteFragment_to_homeFragment"
             app:destination="@id/homeFragment"
             app:popUpTo="@id/updateNoteFragment"
+            app:enterAnim="@anim/enter_left"
+            app:exitAnim="@anim/exit_left"
+            app:popEnterAnim="@anim/enter_right"
+            app:popExitAnim="@anim/exit_right"
             app:popUpToInclusive="true" />
         <argument
             android:name="note"
