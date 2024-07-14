@@ -1,6 +1,5 @@
 package com.example.notes.fragments
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -14,10 +13,8 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-
 import android.widget.ListView
 import android.widget.PopupWindow
-import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
@@ -31,7 +28,6 @@ import com.example.notes.adapter.NoteAdapter
 import com.example.notes.databinding.FragmentHomeBinding
 import com.example.notes.model.Note
 import com.example.notes.viewmodel.NoteViewModel
-import kotlin.math.log
 
 
 class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextListener,
@@ -43,24 +39,25 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
     private lateinit var notesViewModel: NoteViewModel
     private lateinit var noteAdapter: NoteAdapter
     private lateinit var sharedPreferences: SharedPreferences
-
+    private var searchActionTriggered = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        Log.d("homeFragment", "onCreateView: ")
         return binding.root
     }
 
-    val onLongPress:(currentNote:Note)->Unit = {note->
-        view?.let { it1 -> showBottomSheet(it1, notesViewModel,note ) }
+    val onLongPress: (currentNote: Note) -> Unit = { note ->
+        view?.let { it1 -> showBottomSheet(it1, notesViewModel, note) }
     }
-
 
     fun showBottomSheet(view: View, noteViewModel: NoteViewModel, currentNote: Note) {
-        val bottomSheet = BottomSheetFragment(view, noteViewModel, currentNote,"HomeActivity")
+        val bottomSheet = BottomSheetFragment(view, noteViewModel, currentNote, "HomeActivity")
         bottomSheet.show(parentFragmentManager, "MyBottomSheet")
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -77,20 +74,31 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
         menuList.onItemClickListener = this
         popupWindow.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         popupWindow.isOutsideTouchable = true
+
         binding.mainMenu.setOnClickListener {
             popupWindow.showAsDropDown(it)
         }
+
         notesViewModel = (activity as MainActivity).noteViewModel
         binding.searchBar.setOnQueryTextListener(this)
         noteAdapter = NoteAdapter(onLongPress)
-        sharedPreferences =
-            context.getSharedPreferences("layout_preference", Context.MODE_PRIVATE) ?: return
+        sharedPreferences = context.getSharedPreferences("layout_preference", Context.MODE_PRIVATE) ?: return
+
+        binding.searchBar.setOnQueryTextFocusChangeListener { _, hasFocus ->
+            searchActionTriggered = hasFocus
+        }
+
+        binding.searchBar.setOnCloseListener {
+            searchNote("")
+            false
+        }
 
         binding.addNote.setOnClickListener {
             it.findNavController().navigate(
                 R.id.action_homeFragment_to_newNoteFragment
             )
         }
+
         binding.notesList.apply {
             var value = sharedPreferences.getBoolean("layout_preference", false)
             Log.d("listStyle", value.toString())
@@ -104,9 +112,8 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
                 adapter = noteAdapter
             }
             setHasFixedSize(true)
-//            adapter = noteAdapter
-
         }
+
         binding.listStyle.setOnClickListener {
             if (binding.notesList.layoutManager is StaggeredGridLayoutManager) {
                 binding.listStyle.setImageResource(R.drawable.ic_grid_black)
@@ -125,24 +132,19 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
         setUpRecyclerView()
     }
 
-
     private fun saveLayoutPreference(isStaggered: Boolean) {
         sharedPreferences.edit().putBoolean("layout_preference", isStaggered).apply()
     }
 
-
     private fun setUpRecyclerView() {
-
         activity?.let {
             notesViewModel.getAllNotes().observe(
                 viewLifecycleOwner
             ) {
                 noteAdapter.updateNotes(it)
-//                noteAdapter.notifyDataSetChanged()
                 if (it.isEmpty()) {
                     updateUIEmpty()
                 }
-
             }
         }
     }
@@ -160,8 +162,9 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
 
 
     override fun onQueryTextChange(newText: String?): Boolean {
-        if (newText != null) {
+        if (searchActionTriggered && newText != null) {
             searchNote(newText)
+            Log.d("setUpRecyclerView:searchNote", "called:${newText}")
         }
         return true
     }
@@ -169,7 +172,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
     private fun searchNote(query: String?) {
         val searchQuery = "%$query%"
         notesViewModel.searchNote(searchQuery).observe(
-            this
+            viewLifecycleOwner
         ) { list ->
             noteAdapter.updateNotes(list)
         }
@@ -181,11 +184,11 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
             startActivity(intent)
             popupWindow.dismiss()
         }
-       if(position == 1){
-           val intent = Intent(context, AboutActivity::class.java)
-           startActivity(intent)
-           popupWindow.dismiss()
-       }
+        if (position == 1) {
+            val intent = Intent(context, AboutActivity::class.java)
+            startActivity(intent)
+            popupWindow.dismiss()
+        }
 
     }
 
