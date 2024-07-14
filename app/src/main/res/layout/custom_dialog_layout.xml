@@ -65,6 +65,7 @@
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
             android:text="Cancel"
+            android:foreground="?attr/selectableItemBackground"
             tools:ignore="MissingConstraints" />
 
         <Button
@@ -74,6 +75,7 @@
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
             android:text="Delete"
+            android:foreground="?attr/selectableItemBackground"
             tools:ignore="MissingConstraints" />
 </LinearLayout>
 

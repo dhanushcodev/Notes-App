@@ -44,7 +44,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
                 app:cardCornerRadius="15dp"
-                app:cardElevation="0dp">
+                app:cardElevation="0dp"
+                android:foreground="?attr/selectableItemBackground">
 
                 <androidx.appcompat.widget.AppCompatImageView
                     style="@style/iconStyle"

@@ -138,7 +138,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
                 viewLifecycleOwner
             ) {
                 noteAdapter.updateNotes(it)
-                noteAdapter.notifyDataSetChanged()
+//                noteAdapter.notifyDataSetChanged()
                 if (it.isEmpty()) {
                     updateUIEmpty()
                 }

@@ -34,7 +34,7 @@ class NoteAdapter(val onLongPress: (Note) -> Unit) :
         val currentNote = notesList.reversed()[position]
 
         if (currentNote.noteTitle.isEmpty()) {
-            holder.itemBinding.textviewNoteTitle.visibility = View.GONE
+            holder.itemBinding.titleContainer.visibility = View.GONE
         }
         holder.itemBinding.textviewNoteTitle.text = currentNote.noteTitle
         holder.itemBinding.textviewNoteSubtitle.text = currentNote.noteSubtitle
@@ -52,7 +52,9 @@ class NoteAdapter(val onLongPress: (Note) -> Unit) :
             getColor("#ff9966")
         )
 
-        holder.itemBinding.noteColor.background.setColorFilter(colors[position % colors.size],
+        holder.itemBinding.noteColor.background.setColorFilter(
+//            colors[position % colors.size],
+            colors.random(),
             PorterDuff.Mode.SRC_IN
         )
 

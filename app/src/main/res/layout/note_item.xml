@@ -3,93 +3,99 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="8dp"
-    android:background="@android:color/transparent"
-    >
-
-    <androidx.cardview.widget.CardView
-        style="@style/noteItemStyle"
-        android:id="@+id/note_item"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:cardCornerRadius="20dp"
-        app:cardElevation="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.5"
-        tools:ignore="MissingConstraints">
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:padding="8dp">
 
-        <LinearLayout
+        <androidx.cardview.widget.CardView
+            android:id="@+id/note_item"
+            style="@style/noteItemStyle"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:padding="20dp">
+            app:cardCornerRadius="20dp"
+            app:cardElevation="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.5"
+            tools:ignore="MissingConstraints"
+            android:foreground="?attr/selectableItemBackground"
+            >
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical|right"
-                android:orientation="horizontal">
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <LinearLayout
+                    android:id="@+id/title_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:gravity="center_vertical|right"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textview_note_title"
+                        style="@style/textViewStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:text="Note Title"
+                        android:textSize="18sp"
+                        android:textStyle="normal|bold" />
+
+
+                </LinearLayout>
 
                 <TextView
-                    style="@style/textViewStyle"
-                    android:id="@+id/textview_note_title"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/textview_note_content"
+                    style="@style/textViewStyleContent"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:text="Note Title"
-                    android:textSize="18sp"
-                    android:textStyle="normal|bold" />
+                    android:ellipsize="end"
+                    android:fontWeight="100"
+                    android:maxHeight="170dp"
+                    android:maxLines="7"
+                    android:text="Note"
+                    android:textSize="14sp" />
 
-                <View
-                    android:id="@+id/note_color"
-                    android:layout_width="8dp"
-                    android:layout_height="8dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_gravity="top"
-                    android:background="@drawable/circle">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
 
-                </View>
+                    <TextView
+                        android:id="@+id/textview_note_subtitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:text="Subtitle"
+                        android:textColor="#808080"
+                        android:textSize="10sp" />
 
+                    <View
+                        android:id="@+id/note_color"
+                        android:layout_width="5dp"
+                        android:layout_height="5dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="10dp"
+                        android:background="@drawable/circle">
+
+                    </View>
+                </LinearLayout>
             </LinearLayout>
 
-            <TextView
-                style="@style/textViewStyleContent"
-                android:id="@+id/textview_note_content"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:maxHeight="170dp"
-                android:ellipsize="end"
-                android:textSize="14sp"
-                android:maxLines="7"
-                android:text="Note"
-                android:fontWeight="100"/>
 
-            <TextView
-                android:id="@+id/textview_note_subtitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="#808080"
-                android:textSize="10sp"
-                android:layout_marginTop="10dp"
-                android:text="Subtitle"
-                />
-
-        </LinearLayout>
+        </androidx.cardview.widget.CardView>
 
 
-    </androidx.cardview.widget.CardView>
-
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

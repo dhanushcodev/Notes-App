@@ -27,7 +27,8 @@
         android:gravity="center"
         android:padding="10dp"
         android:textSize="18sp"
-        android:text="Delete"/>
+        android:text="Delete"
+        android:foreground="?attr/selectableItemBackground"/>
 
     <TextView
         style="@style/textViewStyle"
@@ -37,7 +38,8 @@
         android:gravity="center"
         android:padding="10dp"
         android:textSize="18sp"
-        android:text="Share"/>
+        android:text="Share"
+        android:foreground="?attr/selectableItemBackground"/>
 
 </LinearLayout>
 </layout>
