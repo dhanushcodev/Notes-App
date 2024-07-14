@@ -38,6 +38,8 @@ class NoteAdapter(val onLongPress: (Note) -> Unit) :
 
         if (currentNote.noteTitle.isEmpty()) {
             holder.itemBinding.titleContainer.visibility = View.GONE
+        }else{
+            holder.itemBinding.titleContainer.visibility = View.VISIBLE
         }
         holder.itemBinding.textviewNoteTitle.text = currentNote.noteTitle
         holder.itemBinding.textviewNoteSubtitle.text = currentNote.noteSubtitle
