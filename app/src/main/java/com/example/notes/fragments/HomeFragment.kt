@@ -1,5 +1,6 @@
 package com.example.notes.fragments
 
+
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -13,6 +14,7 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.ImageView
 import android.widget.ListView
 import android.widget.PopupWindow
 import androidx.appcompat.widget.SearchView
@@ -30,7 +32,7 @@ import com.example.notes.model.Note
 import com.example.notes.viewmodel.NoteViewModel
 
 
-class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextListener,
+class HomeFragment : Fragment(R.layout.fragment_home),
     AdapterView.OnItemClickListener {
 
     var _binding: FragmentHomeBinding? = null
@@ -60,38 +62,16 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        val inflater = LayoutInflater.from(context)
-        val layout = inflater.inflate(R.layout.custom_menu, null)
-        popupWindow = PopupWindow(layout, 600, WindowManager.LayoutParams.WRAP_CONTENT, true)
-        val menuList = layout.findViewById<ListView>(R.id.menu_list)
-        val data = ArrayList<String>()
-        data.add("Settings")
-        data.add("About")
         val context = context
-        val menuAdapter = ArrayAdapter(context!!, android.R.layout.simple_list_item_1, data)
-        menuList.adapter = menuAdapter
-        menuList.onItemClickListener = this
-        popupWindow.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        popupWindow.isOutsideTouchable = true
-
-        binding.mainMenu.setOnClickListener {
-            popupWindow.showAsDropDown(it)
-        }
-
         notesViewModel = (activity as MainActivity).noteViewModel
-        binding.searchBar.setOnQueryTextListener(this)
+        setUpPopUpMenu()
+        setUpSearchView()
+
         noteAdapter = NoteAdapter(onLongPress)
-        sharedPreferences = context.getSharedPreferences("layout_preference", Context.MODE_PRIVATE) ?: return
+        sharedPreferences =
+            requireContext().getSharedPreferences("layout_preference", Context.MODE_PRIVATE)
+                ?: return
 
-        binding.searchBar.setOnQueryTextFocusChangeListener { _, hasFocus ->
-            searchActionTriggered = hasFocus
-        }
-
-        binding.searchBar.setOnCloseListener {
-            searchNote("")
-            false
-        }
 
         binding.addNote.setOnClickListener {
             it.findNavController().navigate(
@@ -99,20 +79,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
             )
         }
 
-        binding.notesList.apply {
-            var value = sharedPreferences.getBoolean("layout_preference", false)
-            Log.d("listStyle", value.toString())
-            if (!value) {
-                layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-                binding.listStyle.setImageResource(R.drawable.ic_list_black)
-                adapter = noteAdapter
-            } else {
-                layoutManager = LinearLayoutManager(context)
-                binding.listStyle.setImageResource(R.drawable.ic_grid_black)
-                adapter = noteAdapter
-            }
-            setHasFixedSize(true)
-        }
+        setUpRecyclerView()
 
         binding.listStyle.setOnClickListener {
             if (binding.notesList.layoutManager is StaggeredGridLayoutManager) {
@@ -129,7 +96,60 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
 
             saveLayoutPreference(binding.notesList.layoutManager is LinearLayoutManager)
         }
-        setUpRecyclerView()
+
+        getNotes()
+    }
+
+    private fun setUpPopUpMenu() {
+        val inflater = LayoutInflater.from(context)
+        val layout = inflater.inflate(R.layout.custom_menu, null)
+        popupWindow = PopupWindow(layout, 600, WindowManager.LayoutParams.WRAP_CONTENT, true)
+        val menuList = layout.findViewById<ListView>(R.id.menu_list)
+        val data = ArrayList<String>()
+        data.add("Settings")
+        data.add("About")
+        val menuAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, data)
+        menuList.adapter = menuAdapter
+        menuList.onItemClickListener = this
+        popupWindow.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        popupWindow.isOutsideTouchable = true
+        binding.mainMenu.setOnClickListener {
+            popupWindow.showAsDropDown(it)
+        }
+    }
+
+    private fun setUpSearchView() {
+
+        val searchView: SearchView = binding.searchBar
+        val searchCloseButtonId =
+            searchView.findViewById<View>(androidx.appcompat.R.id.search_close_btn).id
+        val closeButton = searchView.findViewById<ImageView>(searchCloseButtonId)
+
+        binding.searchBar.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextChange(newText: String?): Boolean {
+                if (searchActionTriggered && newText != null) {
+                    searchNote(newText)
+                    Log.d("setUpRecyclerView:searchNote", "called:${newText}")
+                }
+                return true
+            }
+
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                searchNote(query)
+                return false
+            }
+        })
+
+        closeButton.setOnClickListener {
+            searchView.setQuery("", false)
+            searchView.clearFocus()
+            searchActionTriggered = false
+            getNotes()
+        }
+
+        binding.searchBar.setOnQueryTextFocusChangeListener { _, hasFocus ->
+            searchActionTriggered = hasFocus
+        }
     }
 
     private fun saveLayoutPreference(isStaggered: Boolean) {
@@ -137,10 +157,29 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
     }
 
     private fun setUpRecyclerView() {
+        binding.notesList.apply {
+            var value = sharedPreferences.getBoolean("layout_preference", false)
+            Log.d("listStyle", value.toString())
+            if (!value) {
+                layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+                binding.listStyle.setImageResource(R.drawable.ic_list_black)
+                adapter = noteAdapter
+            } else {
+                layoutManager = LinearLayoutManager(context)
+                binding.listStyle.setImageResource(R.drawable.ic_grid_black)
+                adapter = noteAdapter
+            }
+            setHasFixedSize(true)
+        }
+
+    }
+
+    private fun getNotes(){
         activity?.let {
             notesViewModel.getAllNotes().observe(
                 viewLifecycleOwner
             ) {
+                Log.d("buggy", "RecyclerView")
                 noteAdapter.updateNotes(it)
                 if (it.isEmpty()) {
                     updateUIEmpty()
@@ -155,27 +194,27 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
     }
 
 
-    override fun onQueryTextSubmit(query: String?): Boolean {
-        searchNote(query)
-        return false
-    }
-
-
-    override fun onQueryTextChange(newText: String?): Boolean {
-        if (searchActionTriggered && newText != null) {
-            searchNote(newText)
-            Log.d("setUpRecyclerView:searchNote", "called:${newText}")
-        }
-        return true
-    }
-
     private fun searchNote(query: String?) {
         val searchQuery = "%$query%"
         notesViewModel.searchNote(searchQuery).observe(
             viewLifecycleOwner
-        ) { list ->
-            noteAdapter.updateNotes(list)
+        ) {
+            setSearchResult(it)
+            Log.d("buggy", "search Note: ${query}")
         }
+
+        Log.d("buggy", "search call")
+
+    }
+
+    fun setSearchResult(list: List<Note>) {
+        if (searchActionTriggered)
+            noteAdapter.updateNotes(list)
+        else {
+            binding.searchBar.setQuery("", false)
+            binding.searchBar.clearFocus()
+        }
+
     }
 
     override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
@@ -198,9 +237,3 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
     }
 
 }
-
-
-
-
-
-

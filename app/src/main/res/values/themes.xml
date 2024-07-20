@@ -8,21 +8,27 @@
     <style name="mainBackground">
         <item name="android:background">#F3F4F6</item>
     </style>
+
     <style name="textViewStyle">
         <item name="android:textColor">@color/black</item>
     </style>
+
     <style name="textViewStyleContent">
         <item name="android:textColor">#E2000000</item>
     </style>
+
     <style name="cardViewStyle">
         <item name="android:backgroundTint">#E4E5E9</item>
     </style>
+
     <style name="iconStyle">
         <item name="android:tint">@color/black</item>
     </style>
+
     <style name="floatingActionStyle">
         <item name="srcCompat">@drawable/ic_add_black</item>
-        <item name="android:backgroundTint">#E4E5E9</item>
+        <item name="tint">#FFFFFF</item>
+        <item name="android:backgroundTint">#000000</item>
     </style>
 
     <style name="noteItemStyle">
@@ -33,9 +39,11 @@
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:backgroundTint">#E4E5E9</item>
     </style>
+
     <style name="CustomAlertDialogTheme" parent="Theme.Material3.Light.Dialog.Alert">
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>
+
     <style name="CustomSpinner">
         <item name="android:popupBackground">@drawable/spinner_background_white</item>
     </style>

@@ -23,12 +23,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setUpViewModel() {
-        val noteRepository = NoteRepository(NoteDatabase(this))
-        val viewModelProviderFactory = NoteViewModelFactory(app = application, noteRepository)
+        val app = application as MyApplication
         noteViewModel = ViewModelProvider(
-            this, viewModelProviderFactory
+            this, app.noteViewModelFactory
         ).get(NoteViewModel::class.java)
-
 
     }
 }
