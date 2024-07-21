@@ -8,14 +8,14 @@ plugins {
 }
 
 android {
-    namespace = "com.example.notes"
+    namespace = "com.minimal.notes"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.notes"
+        applicationId = "com.minimal.notes"
         minSdk = 28
         targetSdk = 34
-        versionCode = 1
+        versionCode = 2
         versionName = "1.0.4"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"

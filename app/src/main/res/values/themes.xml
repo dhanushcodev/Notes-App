@@ -1,7 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.Notes" parent="Theme.Material3.DayNight.NoActionBar">
-
         <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
 
@@ -28,7 +27,7 @@
     <style name="floatingActionStyle">
         <item name="srcCompat">@drawable/ic_add_black</item>
         <item name="tint">#FFFFFF</item>
-        <item name="android:backgroundTint">#000000</item>
+        <item name="android:backgroundTint">#303030</item>
     </style>
 
     <style name="noteItemStyle">
@@ -46,6 +45,10 @@
 
     <style name="CustomSpinner">
         <item name="android:popupBackground">@drawable/spinner_background_white</item>
+    </style>
+
+    <style name="appIconStyle">
+        <item name="android:src">@mipmap/ic_launcher_round_dark</item>
     </style>
 
 

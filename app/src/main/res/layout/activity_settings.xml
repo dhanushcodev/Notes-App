@@ -9,7 +9,7 @@
     style="@style/mainBackground"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SettingsActivity">
+    tools:context=".ui.SettingsActivity">
 
     <LinearLayout
         android:id="@+id/settings"

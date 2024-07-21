@@ -44,4 +44,4 @@
 -keep class androidx.databinding.* { *; }
 
 # Your own model classes
--keep class com.example.notes.model.** { *; }
+-keep class com.minimal.notes.model.** { *; }

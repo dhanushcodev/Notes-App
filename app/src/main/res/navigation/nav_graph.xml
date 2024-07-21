@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.notes.fragments.HomeFragment"
+        android:name="com.minimal.notes.fragments.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action
@@ -29,7 +29,7 @@
     </fragment>
     <fragment
         android:id="@+id/newNoteFragment"
-        android:name="com.example.notes.fragments.NewNoteFragment"
+        android:name="com.minimal.notes.fragments.NewNoteFragment"
         android:label="fragment_new_note"
         tools:layout="@layout/fragment_new_note" >
 
@@ -45,7 +45,7 @@
     </fragment>
     <fragment
         android:id="@+id/updateNoteFragment"
-        android:name="com.example.notes.fragments.UpdateNoteFragment"
+        android:name="com.minimal.notes.fragments.UpdateNoteFragment"
         android:label="fragment_update_note"
         tools:layout="@layout/fragment_update_note" >
         <action
@@ -59,7 +59,7 @@
             app:popUpToInclusive="true" />
         <argument
             android:name="note"
-            app:argType="com.example.notes.model.Note"
+            app:argType="com.minimal.notes.model.Note"
             app:nullable="true"
             >
         </argument>

@@ -4,6 +4,7 @@
         <!-- Customize your dark theme here. -->
         <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
         <item name="android:statusBarColor">@android:color/transparent</item>
+
     </style>
 
     <style name="mainBackground">
@@ -34,7 +35,7 @@
         <item name="srcCompat">@drawable/ic_add_white</item>
         <item name="android:tint">@android:color/white</item>
         <item name="tint">#000000</item>
-        <item name="android:backgroundTint">#FFFFFF</item>
+        <item name="android:backgroundTint">#BFBFBF</item>
     </style>
 
     <style name="noteItemStyle">
@@ -52,6 +53,10 @@
 
     <style name="CustomSpinner">
         <item name="android:popupBackground">@drawable/spinner_background_black</item>
+    </style>
+
+    <style name="appIconStyle">
+        <item name="android:src">@mipmap/ic_launcher_round</item>
     </style>
 
 </resources>
