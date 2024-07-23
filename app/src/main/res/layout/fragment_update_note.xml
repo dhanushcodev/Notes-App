@@ -122,18 +122,19 @@
                     app:layout_constraintTop_toBottomOf="@+id/edit_title_update"
                     tools:ignore="MissingConstraints" />
 
-
             <EditText
                 style="@style/textViewStyle"
                 android:id="@+id/edit_note_update"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginTop="20dp"
                 android:background="@android:color/transparent"
                 android:ems="15"
                 android:gravity="start|top"
                 android:hint="Note"
                 android:inputType="textMultiLine"
+                android:autoLink="all"
+                android:linksClickable="true"
                 android:paddingLeft="10dp"
                 android:paddingTop="10dp"
                 android:paddingRight="10dp"

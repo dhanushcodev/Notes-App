@@ -2,6 +2,7 @@ package com.minimal.notes.ui
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
@@ -29,6 +30,7 @@ class SettingsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         sharedPreferences =
             this.getSharedPreferences("Note_preference", Context.MODE_PRIVATE) ?: return
         binding.back.setOnClickListener {

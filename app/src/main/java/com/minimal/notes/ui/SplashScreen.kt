@@ -3,6 +3,7 @@ package com.minimal.notes.ui
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -17,7 +18,7 @@ class SplashScreen : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_splash_screen)
-
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
         sharedPreferences =
             this.getSharedPreferences("Note_preference", Context.MODE_PRIVATE) ?: return
 
