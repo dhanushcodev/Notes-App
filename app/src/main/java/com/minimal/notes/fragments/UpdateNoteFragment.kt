@@ -2,6 +2,7 @@ package com.minimal.notes.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
@@ -14,7 +15,7 @@ import com.minimal.notes.databinding.FragmentUpdateNoteBinding
 import com.minimal.notes.model.Note
 import com.minimal.notes.viewmodel.NoteViewModel
 import com.google.android.material.snackbar.Snackbar
-import com.minimal.notes.utils.LinkTextWatcher
+import com.minimal.notes.utils.CustomLinkMovementMethod
 
 
 class UpdateNoteFragment : Fragment(R.layout.fragment_update_note) {
@@ -46,9 +47,9 @@ class UpdateNoteFragment : Fragment(R.layout.fragment_update_note) {
         binding.editNoteUpdate.setText(currentNote.noteContent)
 
 
-//        val textWatcher = LinkTextWatcher(requireContext(), binding.editNoteUpdate)
-//        textWatcher.applyLinkSpans(binding.editNoteUpdate.text)
-
+//        binding.editNoteUpdate.setMovementMethod(CustomLinkMovementMethod(requireContext()));
+        val movementMethod = CustomLinkMovementMethod(requireContext())
+        binding.editNoteUpdate.movementMethod = movementMethod
 
         binding.delete.setOnClickListener {
             showBottomSheet(view, notesViewModel, currentNote)

@@ -59,4 +59,8 @@
         <item name="android:src">@mipmap/ic_launcher_round</item>
     </style>
 
+    <style name="dividerStyle">
+        <item name="android:background">#616161</item>
+    </style>
+
 </resources>

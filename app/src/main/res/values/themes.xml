@@ -51,5 +51,8 @@
         <item name="android:src">@mipmap/ic_launcher_round_dark</item>
     </style>
 
+    <style name="dividerStyle">
+       <item name="android:background">#CCCCCC</item>
+    </style>
 
 </resources>
