@@ -30,11 +30,18 @@ class SettingsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
         sharedPreferences =
             this.getSharedPreferences("Note_preference", Context.MODE_PRIVATE) ?: return
         binding.back.setOnClickListener {
             finish()
+        }
+
+        binding.autoSaveSwitch.let {
+            it.isChecked = sharedPreferences.getBoolean("isAutoSaveEnabled", false)
+            it.setOnCheckedChangeListener { _, isChecked ->
+                sharedPreferences.edit().putBoolean("isAutoSaveEnabled", isChecked).apply()
+            }
         }
 
         val adapter = ArrayAdapter.createFromResource(
