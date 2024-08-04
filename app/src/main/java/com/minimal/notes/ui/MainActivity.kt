@@ -29,4 +29,5 @@ class MainActivity : AppCompatActivity() {
         ).get(NoteViewModel::class.java)
 
     }
+
 }

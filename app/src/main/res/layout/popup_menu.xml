@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     >
     <androidx.cardview.widget.CardView
-        style="@style/popupViewStyle"
+        style="@style/cardViewStyle"
         app:cardCornerRadius="10dp"
         app:cardElevation="2dp"
         android:layout_marginRight="20dp"
@@ -28,6 +28,7 @@
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:padding="10dp"
+        android:textStyle="bold"
         android:text="Open"
         />
 
@@ -43,6 +44,7 @@
         android:layout_height="wrap_content"
         android:padding="10dp"
         android:text="Copy"
+        android:textStyle="bold"
         />
 
 </LinearLayout>

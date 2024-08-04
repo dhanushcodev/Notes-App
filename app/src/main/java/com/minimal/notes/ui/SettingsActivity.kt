@@ -2,11 +2,9 @@ package com.minimal.notes.ui
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -15,6 +13,8 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
 import com.minimal.notes.R
+import com.minimal.notes.adapter.CustomSpinnerAdapter
+import com.minimal.notes.adapter.SpinnerItem
 import com.minimal.notes.biometric.BiometricPromptManager
 import com.minimal.notes.databinding.ActivitySettingsBinding
 
@@ -30,7 +30,6 @@ class SettingsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
         sharedPreferences =
             this.getSharedPreferences("Note_preference", Context.MODE_PRIVATE) ?: return
         binding.back.setOnClickListener {
@@ -44,11 +43,14 @@ class SettingsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener
             }
         }
 
-        val adapter = ArrayAdapter.createFromResource(
-            this, R.array.theme_array, android.R.layout.simple_spinner_item
+
+        val items = listOf(
+            SpinnerItem("system"),
+            SpinnerItem("light"),
+            SpinnerItem("dark")
         )
 
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        val adapter = CustomSpinnerAdapter(this, items)
         binding.themeSpinner.adapter = adapter
         binding.themeSpinner.setSelection(getThemeSelected())
         binding.themeSpinner.onItemSelectedListener = this
@@ -87,12 +89,12 @@ class SettingsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener
 
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        val selectedItem = parent?.getItemAtPosition(position) as String
-        if (selectedItem.equals("system", true)) {
+        val selectedItem = parent?.getItemAtPosition(position) as SpinnerItem
+        if (selectedItem.text.equals("system", true)) {
             sharedPreferences.edit().putInt("themeMode", AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
                 .apply()
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
-        } else if (selectedItem.equals("light", true)) {
+        } else if (selectedItem.text.equals("light", true)) {
             sharedPreferences.edit().putInt("themeMode", AppCompatDelegate.MODE_NIGHT_NO).apply()
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         } else {
@@ -108,9 +110,11 @@ class SettingsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener
             AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM -> {
                 0
             }
+
             AppCompatDelegate.MODE_NIGHT_NO -> {
                 1
             }
+
             else -> {
                 2
             }

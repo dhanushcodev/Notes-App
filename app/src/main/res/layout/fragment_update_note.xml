@@ -134,7 +134,6 @@
                 android:hint="Note"
                 android:inputType="textMultiLine"
                 android:autoLink="all"
-                android:linksClickable="true"
                 android:paddingLeft="10dp"
                 android:paddingTop="10dp"
                 android:paddingRight="10dp"
