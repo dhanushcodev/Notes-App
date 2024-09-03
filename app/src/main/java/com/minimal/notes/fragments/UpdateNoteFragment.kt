@@ -6,6 +6,7 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.text.Spannable
 import android.text.style.ClickableSpan
 import android.util.Log
 import android.view.Gravity
@@ -113,6 +114,25 @@ class UpdateNoteFragment : Fragment(R.layout.fragment_update_note) {
         }
     }
 
+    private fun extractTextFromClickableSpan(textView: TextView, clickableSpan: ClickableSpan): String {
+        val text = textView.text
+        if (text !is Spannable) {
+            return ""
+        }
+
+        val start = text.getSpanStart(clickableSpan)
+        val end = text.getSpanEnd(clickableSpan)
+
+        return text.subSequence(start, end).toString()
+    }
+
+    private fun copyLinkToClipboard(link: String) {
+        val clipboard = context?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        val clip = ClipData.newPlainText("Copied Link", link)
+        clipboard.setPrimaryClip(clip)
+        Toast.makeText(context, "Link copied to clipboard", Toast.LENGTH_SHORT).show()
+    }
+
     private fun showPopupMenu(view: View, clickableSpan: ClickableSpan, x: Int, y: Int) {
         // Inflate the popup layout
         val inflater = context?.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
@@ -132,10 +152,8 @@ class UpdateNoteFragment : Fragment(R.layout.fragment_update_note) {
         }
 
         popupView.findViewById<View>(R.id.action_copy).setOnClickListener { v: View? ->
-            copyLinkToClipboard(
-                (view as TextView).text
-                    .toString()
-            )
+           val link = extractTextFromClickableSpan(view as TextView,clickableSpan)
+            copyLinkToClipboard(link)
             popupWindow.dismiss()
         }
 
@@ -149,14 +167,6 @@ class UpdateNoteFragment : Fragment(R.layout.fragment_update_note) {
         popupWindow.showAtLocation(view, Gravity.NO_GRAVITY, screenX, screenY - popupWindow.height)
 
     }
-
-    private fun copyLinkToClipboard(link: String) {
-        val clipboard = context?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-        val clip = ClipData.newPlainText("Copied Link", link)
-        clipboard.setPrimaryClip(clip)
-        Toast.makeText(context, "Link copied to clipboard", Toast.LENGTH_SHORT).show()
-    }
-
 
     private fun showBottomSheet(view: View, noteViewModel: NoteViewModel, currentNote: Note) {
         val bottomSheet = BottomSheetFragment(view, noteViewModel, currentNote, "UpdateActivity")
