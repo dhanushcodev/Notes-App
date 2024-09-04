@@ -4,11 +4,11 @@ import android.annotation.SuppressLint
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
+import android.net.Uri
 import android.os.Bundle
-import android.text.Spannable
-import android.text.style.ClickableSpan
-import android.util.Log
+import android.text.util.Linkify
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -17,10 +17,10 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.PopupWindow
-import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.MutableLiveData
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.snackbar.Snackbar
@@ -31,6 +31,7 @@ import com.minimal.notes.ui.MainActivity
 
 
 import com.minimal.notes.viewmodel.NoteViewModel
+import me.saket.bettermovementmethod.BetterLinkMovementMethod
 
 
 class UpdateNoteFragment : Fragment(R.layout.fragment_update_note) {
@@ -44,6 +45,8 @@ class UpdateNoteFragment : Fragment(R.layout.fragment_update_note) {
     private val agrs: UpdateNoteFragmentArgs by navArgs()
     private lateinit var sharedPreferences: SharedPreferences
     private var isAutoSave = false
+    var x = MutableLiveData<Int>(0);
+    var y = MutableLiveData<Int>(0);
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -69,38 +72,10 @@ class UpdateNoteFragment : Fragment(R.layout.fragment_update_note) {
 
 
         binding.editNoteUpdate.setOnTouchListener { v, event ->
-            val editText = v as EditText
             val action = event.action
             if (action == MotionEvent.ACTION_UP || action == MotionEvent.ACTION_DOWN) {
-                val x = event.x.toInt()
-                val y = event.y.toInt()
-
-                val layout = editText.layout
-                val line = layout.getLineForVertical(y)
-                val off = layout.getOffsetForHorizontal(line, x.toFloat())
-
-                val link = editText.text.getSpans(off, off - 1, ClickableSpan::class.java)
-
-                if (link.isNotEmpty()) {
-                    if (action == MotionEvent.ACTION_UP) {
-                        if (!editText.hasFocus())
-                            showPopupMenu(editText, link[0], event.x.toInt(), event.y.toInt())
-                        else {
-                            val imm =
-                                editText.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-                            imm.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT)
-
-                        }
-                    }
-                    return@setOnTouchListener true
-                } else {
-                    Log.d("CustomLinkMovementMethod", "Clicked outside link")
-                    editText.requestFocus()
-                    val imm =
-                        editText.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-                    imm.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT)
-                    return@setOnTouchListener false
-                }
+                 this.x.value = event.x.toInt()
+                  this.y.value = event.y.toInt()
             }
             false
         }
@@ -112,28 +87,41 @@ class UpdateNoteFragment : Fragment(R.layout.fragment_update_note) {
         binding.done.setOnClickListener {
             updateNote(it)
         }
-    }
 
-    private fun extractTextFromClickableSpan(textView: TextView, clickableSpan: ClickableSpan): String {
-        val text = textView.text
-        if (text !is Spannable) {
-            return ""
+        Linkify.addLinks(binding.editNoteUpdate, Linkify.ALL)
+        binding.editNoteUpdate.movementMethod = BetterLinkMovementMethod.newInstance().apply {
+            setOnLinkClickListener { textView, url ->
+                // Handle click or return false to let the framework handle this link.
+                true
+            }
+            setOnLinkLongClickListener { textView, url ->
+                // Handle long-click or return false to let the framework handle this link.
+                (textView as EditText).hideKeyboard()
+                showPopupMenu(textView,x.value!!,y.value!!,url)
+                true
+            }
         }
 
-        val start = text.getSpanStart(clickableSpan)
-        val end = text.getSpanEnd(clickableSpan)
+    }
 
-        return text.subSequence(start, end).toString()
+    fun EditText.hideKeyboard() {
+        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(this.windowToken, 0)
     }
 
     private fun copyLinkToClipboard(link: String) {
+        var url = link
+        if (url.contains("mailto:"))
+            url = url.replace("mailto:","")
+        if(url.contains("tel:"))
+            url = url.replace("tel:","")
         val clipboard = context?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-        val clip = ClipData.newPlainText("Copied Link", link)
+        val clip = ClipData.newPlainText("Copied", url)
         clipboard.setPrimaryClip(clip)
-        Toast.makeText(context, "Link copied to clipboard", Toast.LENGTH_SHORT).show()
+        Toast.makeText(context,url,Toast.LENGTH_SHORT).show()
     }
 
-    private fun showPopupMenu(view: View, clickableSpan: ClickableSpan, x: Int, y: Int) {
+    private fun showPopupMenu(view: View, x: Int, y: Int,url: String) {
         // Inflate the popup layout
         val inflater = context?.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val popupView: View = inflater.inflate(R.layout.popup_menu, null)
@@ -145,15 +133,16 @@ class UpdateNoteFragment : Fragment(R.layout.fragment_update_note) {
             ViewGroup.LayoutParams.WRAP_CONTENT, true
         )
 
+
         // Set up the menu item click listeners
         popupView.findViewById<View>(R.id.action_open).setOnClickListener { v: View? ->
-            clickableSpan.onClick(view)
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+            startActivity(intent)
             popupWindow.dismiss()
         }
 
         popupView.findViewById<View>(R.id.action_copy).setOnClickListener { v: View? ->
-           val link = extractTextFromClickableSpan(view as TextView,clickableSpan)
-            copyLinkToClipboard(link)
+            copyLinkToClipboard(url)
             popupWindow.dismiss()
         }
 
@@ -167,6 +156,7 @@ class UpdateNoteFragment : Fragment(R.layout.fragment_update_note) {
         popupWindow.showAtLocation(view, Gravity.NO_GRAVITY, screenX, screenY - popupWindow.height)
 
     }
+
 
     private fun showBottomSheet(view: View, noteViewModel: NoteViewModel, currentNote: Note) {
         val bottomSheet = BottomSheetFragment(view, noteViewModel, currentNote, "UpdateActivity")

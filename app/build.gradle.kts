@@ -65,4 +65,6 @@ dependencies {
     kapt(libs.androidx.room.compiler)
     implementation("androidx.biometric:biometric:1.1.0")
     implementation(kotlin("script-runtime"))
+
+    implementation("me.saket:better-link-movement-method:2.2.0")
 }
