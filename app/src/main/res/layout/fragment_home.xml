@@ -47,7 +47,7 @@
 
                     <androidx.cardview.widget.CardView
                         android:id="@+id/main_menu"
-                        style="@style/cardViewStyle"
+                        android:backgroundTint="@android:color/transparent"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="5dp"
@@ -128,7 +128,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="1dp"
-            android:padding="10dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 

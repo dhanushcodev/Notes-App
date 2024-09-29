@@ -10,7 +10,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="10dp"
-    android:background="@android:color/transparent"
     tools:context=".fragments.NewNoteFragment">
 
 
@@ -19,53 +18,33 @@
         android:id="@+id/note_new_topBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="15dp"
-        android:paddingBottom="10dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+        android:paddingLeft="5dp"
         android:orientation="horizontal"
         tools:ignore="MissingConstraints">
 
 
-        <androidx.cardview.widget.CardView
-            style="@style/cardViewStyle"
-            android:id="@+id/back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:cardCornerRadius="15dp"
-            app:cardElevation="0dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:foreground="?attr/selectableItemBackground">
-
             <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/back"
                 style="@style/iconStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                app:srcCompat="@drawable/ic_back_black" />
-        </androidx.cardview.widget.CardView>
+                app:srcCompat="@drawable/ic_back_black"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
 
-        <androidx.cardview.widget.CardView
-            style="@style/cardViewStyle"
-            android:id="@+id/done"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:cardCornerRadius="15dp"
-            app:cardElevation="0dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:foreground="?attr/selectableItemBackground">
 
             <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/done"
                 style="@style/iconStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 app:srcCompat="@drawable/ic_done_black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 />
 
-        </androidx.cardview.widget.CardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

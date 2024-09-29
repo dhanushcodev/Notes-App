@@ -16,50 +16,42 @@
         android:id="@+id/note_new_topBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="15dp"
-        android:paddingBottom="10dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+        android:paddingLeft="5dp"
         android:orientation="horizontal"
         tools:ignore="MissingConstraints">
 
-        <androidx.cardview.widget.CardView
-            style="@style/cardViewStyle"
-            android:id="@+id/delete"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:cardCornerRadius="15dp"
-            app:cardElevation="0dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
 
-            <androidx.appcompat.widget.AppCompatImageView
-                style="@style/iconStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                app:srcCompat="@drawable/ic_more_black" />
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            style="@style/cardViewStyle"
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/done"
+            style="@style/iconStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="15dp"
-            app:cardElevation="0dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" >
+            android:layout_margin="10dp"
+            app:srcCompat="@drawable/ic_done_black"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
 
             <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/delete"
                 style="@style/iconStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                app:srcCompat="@drawable/ic_done_black"
+                app:srcCompat="@drawable/ic_more_black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 />
 
-        </androidx.cardview.widget.CardView>
+
+
+
+
+
+
+
+
+
 
 
 
@@ -133,7 +125,7 @@
                 android:gravity="start|top"
                 android:hint="Note"
                 android:inputType="textMultiLine"
-
+                android:lineSpacingExtra="1dp"
                 android:paddingLeft="10dp"
                 android:paddingTop="10dp"
                 android:paddingRight="10dp"
