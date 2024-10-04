@@ -45,3 +45,19 @@
 
 # Your own model classes
 -keep class com.minimal.notes.model.** { *; }
+
+# Keep Hilt annotations
+-keep class dagger.hilt.** { *; }
+-keep class javax.inject.** { *; }
+
+# Keep Hilt-generated classes
+-keep class * implements dagger.hilt.internal.GeneratedComponent { *; }
+
+# Keep Hilt modules
+-keep @dagger.Module class * { *; }
+
+# Keep injected classes
+-keepclassmembers,allowobfuscation class * {
+    @javax.inject.Inject <fields>;
+    @javax.inject.Inject <methods>;
+}

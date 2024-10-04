@@ -2,8 +2,9 @@ package com.minimal.notes.repository
 
 import com.minimal.notes.database.NoteDatabase
 import com.minimal.notes.model.Note
+import javax.inject.Inject
 
-class NoteRepository(private val db: NoteDatabase) {
+class NoteRepository @Inject constructor(private val db: NoteDatabase) {
 
     suspend fun insertNote(note: Note) = db.getNoteDao().insertNote(note)
     suspend fun updateNote(note: Note) = db.getNoteDao().updateNote(note)

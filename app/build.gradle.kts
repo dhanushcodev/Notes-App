@@ -4,6 +4,7 @@ plugins {
     id("kotlin-kapt")
     id("androidx.navigation.safeargs.kotlin")
     id("kotlin-parcelize")
+    id("dagger.hilt.android.plugin")
 //    id("com.google.devtools.ksp")
 }
 
@@ -65,6 +66,8 @@ dependencies {
     kapt(libs.androidx.room.compiler)
     implementation("androidx.biometric:biometric:1.1.0")
     implementation(kotlin("script-runtime"))
-
     implementation("me.saket:better-link-movement-method:2.2.0")
+
+    implementation ("com.google.dagger:hilt-android:2.52")
+    kapt ("com.google.dagger:hilt-compiler:2.52")
 }

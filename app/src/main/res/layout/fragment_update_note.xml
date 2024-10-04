@@ -21,28 +21,49 @@
         tools:ignore="MissingConstraints">
 
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <androidx.cardview.widget.CardView
             android:id="@+id/done"
+            android:backgroundTint="@android:color/transparent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            android:foreground="?attr/selectableItemBackground"
+            app:cardCornerRadius="15dp"
+            app:cardElevation="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+        <androidx.appcompat.widget.AppCompatImageView
             style="@style/iconStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:padding="9dp"
             app:srcCompat="@drawable/ic_done_black"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            />
 
+            />
+        </androidx.cardview.widget.CardView>
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/delete"
+            android:backgroundTint="@android:color/transparent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            android:foreground="?attr/selectableItemBackground"
+            app:cardCornerRadius="15dp"
+            app:cardElevation="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            >
             <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/delete"
                 style="@style/iconStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
+                android:padding="9dp"
                 app:srcCompat="@drawable/ic_more_black"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                />
 
+                />
+        </androidx.cardview.widget.CardView>
 
 
 
@@ -82,7 +103,7 @@
                 android:id="@+id/edit_title_update"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:background="@android:color/transparent"
                 android:hint="Title"
                 android:inputType="textMultiLine"

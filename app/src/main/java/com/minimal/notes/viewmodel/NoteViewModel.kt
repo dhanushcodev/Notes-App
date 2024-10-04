@@ -5,9 +5,12 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.minimal.notes.model.Note
 import com.minimal.notes.repository.NoteRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class NoteViewModel(app:Application,private val noteRepository: NoteRepository):AndroidViewModel(app) {
+@HiltViewModel
+class NoteViewModel @Inject constructor(app:Application, private val noteRepository: NoteRepository):AndroidViewModel(app) {
 
     fun addNote(note: Note)=
         viewModelScope.launch {
