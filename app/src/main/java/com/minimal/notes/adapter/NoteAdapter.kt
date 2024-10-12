@@ -12,7 +12,7 @@ import com.minimal.notes.databinding.NoteItemBinding
 import com.minimal.notes.fragments.HomeFragmentDirections
 import com.minimal.notes.model.Note
 
-class NoteAdapter(val onLongPress: (Note) -> Unit) :
+class NoteAdapter(val onLongPress: (Note) -> Unit,private val onItemClicked: (Note) -> Unit) :
     RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
 
     inner class NoteViewHolder(val itemBinding: NoteItemBinding) :
@@ -62,9 +62,7 @@ class NoteAdapter(val onLongPress: (Note) -> Unit) :
         )
 
         holder.itemView.setOnClickListener {
-            val direction =
-                HomeFragmentDirections.actionHomeFragmentToUpdateNoteFragment(currentNote)
-            it.findNavController().navigate(direction)
+            onItemClicked(currentNote)
         }
 
         holder.itemView.setOnLongClickListener {

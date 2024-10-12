@@ -46,11 +46,31 @@
                         tools:ignore="MissingConstraints" />
 
                     <androidx.cardview.widget.CardView
+                        android:id="@+id/note_search"
+                        android:backgroundTint="@android:color/transparent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="5dp"
+                        android:layout_gravity="center_vertical"
+                        android:foreground="?attr/selectableItemBackground"
+                        app:cardCornerRadius="15dp"
+                        app:cardElevation="0dp">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            style="@style/iconStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="9dp"
+                            app:srcCompat="@drawable/ic_search_black" />
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
                         android:id="@+id/main_menu"
                         android:backgroundTint="@android:color/transparent"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="5dp"
+                        android:layout_gravity="center_vertical"
                         android:foreground="?attr/selectableItemBackground"
                         app:cardCornerRadius="15dp"
                         app:cardElevation="0dp">
@@ -76,6 +96,7 @@
                 android:layout_marginRight="20dp"
                 app:cardCornerRadius="15dp"
                 app:cardElevation="0dp"
+                android:visibility="gone"
                 tools:ignore="MissingConstraints">
 
 

@@ -26,6 +26,9 @@
             app:popEnterAnim="@anim/enter_right"
             app:popExitAnim="@anim/exit_right"
             app:popUpTo="@id/homeFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
     </fragment>
     <fragment
         android:id="@+id/newNoteFragment"
@@ -63,5 +66,18 @@
             app:nullable="true"
             >
         </argument>
+    </fragment>
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.minimal.notes.fragments.SearchFragment"
+        android:label="fragment_search"
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/action_searchFragment_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/homeFragment"/>
+        <action
+            android:id="@+id/action_searchFragment_to_updateNoteFragment"
+            app:destination="@id/updateNoteFragment" />
     </fragment>
 </navigation>
