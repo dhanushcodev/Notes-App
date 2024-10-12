@@ -6,6 +6,9 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.graphics.Color
+import android.graphics.Rect
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.text.util.Linkify
@@ -14,8 +17,12 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.EditText
+import android.widget.ListView
 import android.widget.PopupWindow
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
@@ -31,6 +38,7 @@ import com.minimal.notes.ui.MainActivity
 
 
 import com.minimal.notes.viewmodel.NoteViewModel
+import kotlinx.coroutines.delay
 import me.saket.bettermovementmethod.BetterLinkMovementMethod
 
 
@@ -95,18 +103,21 @@ class UpdateNoteFragment : Fragment(R.layout.fragment_update_note) {
                 true
             }
             setOnLinkLongClickListener { textView, url ->
-                // Handle long-click or return false to let the framework handle this link.
                 (textView as EditText).hideKeyboard()
                 showPopupMenu(textView,x.value!!,y.value!!,url)
-                true
+              true
             }
         }
 
+
     }
 
-    fun EditText.hideKeyboard() {
+
+
+    fun View.hideKeyboard() {
         val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(this.windowToken, 0)
+
     }
 
     private fun copyLinkToClipboard(link: String) {
@@ -122,29 +133,34 @@ class UpdateNoteFragment : Fragment(R.layout.fragment_update_note) {
     }
 
     private fun showPopupMenu(view: View, x: Int, y: Int,url: String) {
-        // Inflate the popup layout
-        val inflater = context?.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val popupView: View = inflater.inflate(R.layout.popup_menu, null)
-
-        // Create the PopupWindow
-        val popupWindow = PopupWindow(
-            popupView,
-            ViewGroup.LayoutParams.WRAP_CONTENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT, true
-        )
+        var popupWindow:PopupWindow
+        var menuItems:MutableList<String>
+        val inflater = LayoutInflater.from(context)
+        val layout = inflater.inflate(R.layout.custom_menu, null)
+        popupWindow = PopupWindow(layout, 600, WindowManager.LayoutParams.WRAP_CONTENT, true)
+        val menuList = layout.findViewById<ListView>(R.id.menu_list)
+        menuItems = mutableListOf("Open","Copy")
 
 
-        // Set up the menu item click listeners
-        popupView.findViewById<View>(R.id.action_open).setOnClickListener { v: View? ->
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-            startActivity(intent)
-            popupWindow.dismiss()
+        val menuAdapter =
+            ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, menuItems)
+        menuList.adapter = menuAdapter
+        menuList.onItemClickListener = AdapterView.OnItemClickListener{
+            parent, view, position, id ->
+            when(position){
+                0 -> {
+                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                    startActivity(intent)
+                    popupWindow.dismiss()
+                }
+                1 -> {
+                    copyLinkToClipboard(url)
+                    popupWindow.dismiss()
+                }
+            }
         }
-
-        popupView.findViewById<View>(R.id.action_copy).setOnClickListener { v: View? ->
-            copyLinkToClipboard(url)
-            popupWindow.dismiss()
-        }
+        popupWindow.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        popupWindow.isOutsideTouchable = true
 
         // Calculate the position
         val location = IntArray(2)

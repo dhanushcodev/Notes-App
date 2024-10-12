@@ -98,11 +98,11 @@ class HomeFragment : Fragment(R.layout.fragment_home), AdapterView.OnItemClickLi
         menuItems = mutableListOf("Grid View", "Settings", "About")
 
         if (getLayoutPreference()) {
-            menuItems[0] = "List View"
+            menuItems[0] = "List view"
             Log.d("liststyle", "list view")
         } else {
             Log.d("liststyle", "grid view")
-            menuItems[0] = "Grid View"
+            menuItems[0] = "Grid view"
         }
         val menuAdapter =
             ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, menuItems)
@@ -155,7 +155,8 @@ class HomeFragment : Fragment(R.layout.fragment_home), AdapterView.OnItemClickLi
     }
 
     override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        if (position == 0) {
+        when(position){
+        0 -> {
             if (binding.notesList.layoutManager is StaggeredGridLayoutManager) {
                 binding.notesList.layoutManager =
                     LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
@@ -171,15 +172,16 @@ class HomeFragment : Fragment(R.layout.fragment_home), AdapterView.OnItemClickLi
             (parent?.adapter as ArrayAdapter<*>).notifyDataSetChanged()
             popupWindow.dismiss()
         }
-        if (position == 1) {
+        1 -> {
             val intent = Intent(context, AboutActivity::class.java)
             startActivity(intent)
             popupWindow.dismiss()
         }
-        if (position == 2) {
+        2 -> {
             val intent = Intent(context, SettingsActivity::class.java)
             startActivity(intent)
             popupWindow.dismiss()
+        }
         }
     }
 
