@@ -30,17 +30,6 @@ class SearchFragment : Fragment() {
     private lateinit var sharedPreferences: SharedPreferences
 
 
-
-    private val onLongPress: (currentNote: Note) -> Unit = { note ->
-        view?.let { it1 -> showBottomSheet(it1, notesViewModel, note) }
-    }
-
-    private val onItemClicked: (currentNote: Note) -> Unit = {
-        val direction =
-            SearchFragmentDirections.actionSearchFragmentToUpdateNoteFragment(it)
-        findNavController().navigate(direction)
-    }
-
     private fun getLayoutPreference():Boolean{
         return sharedPreferences.getBoolean("isStaggered", false)
     }
@@ -77,7 +66,18 @@ class SearchFragment : Fragment() {
             it.findNavController().navigate(R.id.action_searchFragment_to_homeFragment)
         }
 
-        noteAdapter = NoteAdapter(onLongPress,onItemClicked)
+        noteAdapter = NoteAdapter(object :NoteAdapter.OnNoteClickListener{
+            override fun onNoteClick(currentNote: Note) {
+                val direction =
+                    SearchFragmentDirections.actionSearchFragmentToUpdateNoteFragment(currentNote)
+                findNavController().navigate(direction)
+            }
+
+            override fun onNoteLongClick(currentNote: Note) {
+                view?.let { it1 -> showBottomSheet(it1, notesViewModel, currentNote) }
+            }
+
+        })
         setUpSearchView()
         setUpRecyclerView()
         getNotes()

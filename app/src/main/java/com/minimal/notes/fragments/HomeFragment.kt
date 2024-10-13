@@ -50,15 +50,6 @@ class HomeFragment : Fragment(R.layout.fragment_home), AdapterView.OnItemClickLi
         return binding.root
     }
 
-    private val onLongPress: (currentNote: Note) -> Unit = { note ->
-        view?.let { it1 -> showBottomSheet(it1, notesViewModel, note) }
-    }
-
-    private val onItemClicked: (currentNote: Note) -> Unit = {
-        val direction = HomeFragmentDirections.actionHomeFragmentToUpdateNoteFragment(it)
-        findNavController().navigate(direction)
-    }
-
     private fun saveLayoutPreference(isStaggered: Boolean) {
         sharedPreferences.edit().putBoolean("isStaggered", isStaggered).apply()
     }
@@ -72,7 +63,19 @@ class HomeFragment : Fragment(R.layout.fragment_home), AdapterView.OnItemClickLi
         val context = context
         notesViewModel = (activity as MainActivity).noteViewModel
 
-        noteAdapter = NoteAdapter(onLongPress, onItemClicked)
+        noteAdapter = NoteAdapter(
+            object :NoteAdapter.OnNoteClickListener{
+                override fun onNoteClick(currentNote: Note) {
+                    val direction = HomeFragmentDirections.actionHomeFragmentToUpdateNoteFragment(currentNote)
+                    findNavController().navigate(direction)
+                }
+
+                override fun onNoteLongClick(currentNote: Note) {
+                    view?.let { it1 -> showBottomSheet(it1, notesViewModel, currentNote) }
+                }
+
+            }
+        )
 
         binding.addNote.setOnClickListener {
             it.findNavController().navigate(

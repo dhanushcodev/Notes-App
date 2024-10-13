@@ -12,8 +12,13 @@ import com.minimal.notes.databinding.NoteItemBinding
 import com.minimal.notes.fragments.HomeFragmentDirections
 import com.minimal.notes.model.Note
 
-class NoteAdapter(val onLongPress: (Note) -> Unit,private val onItemClicked: (Note) -> Unit) :
+class NoteAdapter(private val onNoteClickListener: OnNoteClickListener) :
     RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
+
+    interface OnNoteClickListener {
+        fun onNoteClick(currentNote:Note)
+        fun onNoteLongClick(currentNote: Note)
+    }
 
     inner class NoteViewHolder(val itemBinding: NoteItemBinding) :
         RecyclerView.ViewHolder(itemBinding.root)
@@ -62,11 +67,11 @@ class NoteAdapter(val onLongPress: (Note) -> Unit,private val onItemClicked: (No
         )
 
         holder.itemView.setOnClickListener {
-            onItemClicked(currentNote)
+            onNoteClickListener.onNoteClick(currentNote)
         }
 
         holder.itemView.setOnLongClickListener {
-            onLongPress(currentNote)
+            onNoteClickListener.onNoteLongClick(currentNote)
             true
         }
     }
