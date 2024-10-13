@@ -7,7 +7,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Color
-import android.graphics.Rect
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
@@ -35,10 +34,9 @@ import com.minimal.notes.R
 import com.minimal.notes.databinding.FragmentUpdateNoteBinding
 import com.minimal.notes.model.Note
 import com.minimal.notes.ui.MainActivity
-
-
+import com.minimal.notes.utils.DeleteDialog
+import com.minimal.notes.utils.ShareNote
 import com.minimal.notes.viewmodel.NoteViewModel
-import kotlinx.coroutines.delay
 import me.saket.bettermovementmethod.BetterLinkMovementMethod
 
 
@@ -60,6 +58,7 @@ class UpdateNoteFragment : Fragment(R.layout.fragment_update_note) {
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = FragmentUpdateNoteBinding.inflate(inflater, container, false)
+        sharedPreferences = requireContext().getSharedPreferences("Note_preference", Context.MODE_PRIVATE)
         return binding.root
     }
 
@@ -67,9 +66,10 @@ class UpdateNoteFragment : Fragment(R.layout.fragment_update_note) {
     @SuppressLint("ClickableViewAccessibility")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        sharedPreferences =
-            requireContext().getSharedPreferences("Note_preference", Context.MODE_PRIVATE) ?: return
         isAutoSave = sharedPreferences.getBoolean("isAutoSaveEnabled", false)
+        if(isAutoSave){
+            binding.done.visibility = View.GONE
+        }
         mView = view
         notesViewModel = (activity as MainActivity).noteViewModel
         currentNote = agrs.note!!
@@ -88,9 +88,7 @@ class UpdateNoteFragment : Fragment(R.layout.fragment_update_note) {
             false
         }
 
-        binding.delete.setOnClickListener {
-            showBottomSheet(view, notesViewModel, currentNote)
-        }
+        setUpPopUpMenu()
 
         binding.done.setOnClickListener {
             updateNote(it)
@@ -112,7 +110,49 @@ class UpdateNoteFragment : Fragment(R.layout.fragment_update_note) {
 
     }
 
+    private fun setUpPopUpMenu() {
+        var popupWindow:PopupWindow
+        var menuItems:MutableList<String>
+        val inflater = LayoutInflater.from(context)
+        val layout = inflater.inflate(R.layout.custom_menu, null)
+        popupWindow = PopupWindow(layout, 600, WindowManager.LayoutParams.WRAP_CONTENT, true)
+        val menuList = layout.findViewById<ListView>(R.id.menu_list)
+        menuItems = mutableListOf("Delete","Share")
 
+        val menuAdapter =
+            ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, menuItems)
+        menuList.adapter = menuAdapter
+        menuList.onItemClickListener = AdapterView.OnItemClickListener{
+                parent, view, position, id ->
+            when(position){
+                0 -> {
+                    val onDelete = {
+                        notesViewModel.deleteNote(currentNote)
+                        mView.findNavController().navigateUp()
+                        Snackbar.make(mView, "Note Deleted", Snackbar.LENGTH_SHORT).show()
+                    }
+                    DeleteDialog.showDialog(requireContext(),onDelete,{})
+                    popupWindow.dismiss()
+                }
+                1 -> {
+                    val shareTitle = currentNote.noteTitle
+                    val shareContent = currentNote.noteContent
+                    ShareNote.share(requireContext(),shareTitle,shareContent)
+                    popupWindow.dismiss()
+                }
+            }
+        }
+        popupWindow.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        popupWindow.isOutsideTouchable = true
+
+        binding.delete.setOnClickListener {
+            binding.editNoteUpdate.apply {
+                clearFocus()
+                hideKeyboard()
+            }
+            popupWindow.showAsDropDown(it)
+        }
+    }
 
     fun View.hideKeyboard() {
         val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -173,11 +213,6 @@ class UpdateNoteFragment : Fragment(R.layout.fragment_update_note) {
 
     }
 
-
-    private fun showBottomSheet(view: View, noteViewModel: NoteViewModel, currentNote: Note) {
-        val bottomSheet = BottomSheetFragment(view, noteViewModel, currentNote, "UpdateActivity")
-        bottomSheet.show(parentFragmentManager, "MyBottomSheet")
-    }
 
     fun updateNote(view: View) {
         val title = binding.editTitleUpdate.text.toString().trim()

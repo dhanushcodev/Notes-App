@@ -173,12 +173,13 @@ class HomeFragment : Fragment(R.layout.fragment_home), AdapterView.OnItemClickLi
             popupWindow.dismiss()
         }
         1 -> {
-            val intent = Intent(context, AboutActivity::class.java)
+            val intent = Intent(context, SettingsActivity::class.java)
             startActivity(intent)
             popupWindow.dismiss()
+
         }
         2 -> {
-            val intent = Intent(context, SettingsActivity::class.java)
+            val intent = Intent(context, AboutActivity::class.java)
             startActivity(intent)
             popupWindow.dismiss()
         }
