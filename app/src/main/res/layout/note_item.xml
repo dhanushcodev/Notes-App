@@ -70,22 +70,38 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
+                    android:gravity="center_vertical"
                     android:orientation="horizontal">
 
+                    <androidx.cardview.widget.CardView
+                        style="@style/tagCardStyle"
+                        android:id="@+id/note_subtitle_card"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:cardCornerRadius="10dp"
+                        app:cardElevation="0dp"
+                       >
                     <TextView
                         android:id="@+id/textview_note_subtitle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="2"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="10dp"
+                        android:paddingTop="2dp"
+                        android:paddingBottom="2dp"
                         android:text="Subtitle"
                         android:textColor="#808080"
                         android:textSize="10sp" />
-
+                    </androidx.cardview.widget.CardView>
                     <View
+                        android:layout_weight="2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="5dp"/>
+                    <View
+                        android:visibility="gone"
                         android:id="@+id/note_color"
                         android:layout_width="5dp"
                         android:layout_height="5dp"
-                        android:layout_gravity="center_vertical"
                         android:layout_marginLeft="10dp"
                         android:background="@drawable/circle">
 

@@ -34,8 +34,6 @@ import com.minimal.notes.R
 import com.minimal.notes.databinding.FragmentUpdateNoteBinding
 import com.minimal.notes.model.Note
 import com.minimal.notes.ui.MainActivity
-import com.minimal.notes.utils.DeleteDialog
-import com.minimal.notes.utils.ShareNote
 import com.minimal.notes.viewmodel.NoteViewModel
 import me.saket.bettermovementmethod.BetterLinkMovementMethod
 
@@ -88,10 +86,12 @@ class UpdateNoteFragment : Fragment(R.layout.fragment_update_note) {
             false
         }
 
-        setUpPopUpMenu()
-
         binding.done.setOnClickListener {
             updateNote(it)
+        }
+
+        binding.more.setOnClickListener {
+            showBottomSheet(it,notesViewModel,currentNote)
         }
 
         Linkify.addLinks(binding.editNoteUpdate, Linkify.ALL)
@@ -110,48 +110,9 @@ class UpdateNoteFragment : Fragment(R.layout.fragment_update_note) {
 
     }
 
-    private fun setUpPopUpMenu() {
-        var popupWindow:PopupWindow
-        var menuItems:MutableList<String>
-        val inflater = LayoutInflater.from(context)
-        val layout = inflater.inflate(R.layout.custom_menu, null)
-        popupWindow = PopupWindow(layout, 600, WindowManager.LayoutParams.WRAP_CONTENT, true)
-        val menuList = layout.findViewById<ListView>(R.id.menu_list)
-        menuItems = mutableListOf("Delete","Share")
-
-        val menuAdapter =
-            ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, menuItems)
-        menuList.adapter = menuAdapter
-        menuList.onItemClickListener = AdapterView.OnItemClickListener{
-                parent, view, position, id ->
-            when(position){
-                0 -> {
-                    val onDelete = {
-                        notesViewModel.deleteNote(currentNote)
-                        mView.findNavController().navigateUp()
-                        Snackbar.make(mView, "Note Deleted", Snackbar.LENGTH_SHORT).show()
-                    }
-                    DeleteDialog.showDialog(requireContext(),onDelete,{})
-                    popupWindow.dismiss()
-                }
-                1 -> {
-                    val shareTitle = currentNote.noteTitle
-                    val shareContent = currentNote.noteContent
-                    ShareNote.share(requireContext(),shareTitle,shareContent)
-                    popupWindow.dismiss()
-                }
-            }
-        }
-        popupWindow.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        popupWindow.isOutsideTouchable = true
-
-        binding.delete.setOnClickListener {
-            binding.editNoteUpdate.apply {
-                clearFocus()
-                hideKeyboard()
-            }
-            popupWindow.showAsDropDown(it)
-        }
+    fun showBottomSheet(view: View, noteViewModel: NoteViewModel, currentNote: Note) {
+        val bottomSheet = BottomSheetFragment(view, noteViewModel, currentNote, "HomeActivity")
+        bottomSheet.show(parentFragmentManager, "MyBottomSheet")
     }
 
     fun View.hideKeyboard() {

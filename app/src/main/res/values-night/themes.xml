@@ -23,6 +23,18 @@
         <item name="android:backgroundTint">#1e1e1e</item>
     </style>
 
+    <style name="tagCardStyle">
+        <item name="android:backgroundTint" />
+    </style>
+
+    <style name="tagListStyle">
+        <item name="android:backgroundTint">@color/white</item>
+    </style>
+
+    <style name="tagListTextStyle">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
     <style name="popupViewStyle">
         <item name="android:backgroundTint">#393939</item>
     </style>
@@ -32,8 +44,6 @@
     </style>
 
     <style name="floatingActionStyle">
-        <item name="srcCompat">@drawable/ic_add_white</item>
-        <item name="android:tint">@android:color/white</item>
         <item name="tint">#000000</item>
         <item name="android:backgroundTint">#BFBFBF</item>
     </style>

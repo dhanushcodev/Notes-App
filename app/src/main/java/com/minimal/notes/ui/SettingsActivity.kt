@@ -4,18 +4,13 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.view.View
-import android.widget.AdapterView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
 import com.minimal.notes.R
-import com.minimal.notes.adapter.CustomSpinnerAdapter
-import com.minimal.notes.adapter.SpinnerItem
 import com.minimal.notes.biometric.BiometricPromptManager
 import com.minimal.notes.databinding.ActivitySettingsBinding
 
