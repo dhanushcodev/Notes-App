@@ -19,7 +19,7 @@ import com.minimal.notes.adapter.SpinnerItem
 import com.minimal.notes.biometric.BiometricPromptManager
 import com.minimal.notes.databinding.ActivitySettingsBinding
 
-class SettingsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
+class SettingsActivity : AppCompatActivity() {
     lateinit var binding: ActivitySettingsBinding
     private lateinit var sharedPreferences: SharedPreferences
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,17 +48,9 @@ class SettingsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener
             startActivity(Intent(this, AboutActivity::class.java))
         }
 
-
-        val items = listOf(
-            SpinnerItem("system"),
-            SpinnerItem("light"),
-            SpinnerItem("dark")
-        )
-
-        val adapter = CustomSpinnerAdapter(this, items)
-        binding.themeSpinner.adapter = adapter
-        binding.themeSpinner.setSelection(getThemeSelected())
-        binding.themeSpinner.onItemSelectedListener = this
+        binding.themeChangeCard.setOnClickListener {
+            startActivity(Intent(this, ThemeChangeActivity::class.java))
+        }
 
 
         val isBio = sharedPreferences.getBoolean("isBiometricEnabled", false)
@@ -93,41 +85,5 @@ class SettingsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener
     }
 
 
-    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        val selectedItem = parent?.getItemAtPosition(position) as SpinnerItem
-        if (selectedItem.text.equals("system", true)) {
-            sharedPreferences.edit().putInt("themeMode", AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
-                .apply()
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
-        } else if (selectedItem.text.equals("light", true)) {
-            sharedPreferences.edit().putInt("themeMode", AppCompatDelegate.MODE_NIGHT_NO).apply()
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-        } else {
-            sharedPreferences.edit().putInt("themeMode", AppCompatDelegate.MODE_NIGHT_YES).apply()
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-        }
-    }
-
-    private fun getThemeSelected(): Int {
-        val theme =
-            sharedPreferences.getInt("themeMode", AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
-        return when (theme) {
-            AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM -> {
-                0
-            }
-
-            AppCompatDelegate.MODE_NIGHT_NO -> {
-                1
-            }
-
-            else -> {
-                2
-            }
-        }
-    }
-
-    override fun onNothingSelected(parent: AdapterView<*>?) {
-
-    }
 
 }
