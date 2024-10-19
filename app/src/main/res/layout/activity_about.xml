@@ -134,7 +134,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="15sp"
-                        android:text="Note"
+                        android:text="Gtihub Repository"
                         android:textStyle="bold" />
 
                     <TextView
@@ -142,7 +142,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="start"
                         android:textSize="12sp"
-                        android:text="Minimal note app with authentication" />
+                        android:text="Report issues, Contribute or request new features" />
                 </LinearLayout>
 
                 <ImageView

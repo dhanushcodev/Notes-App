@@ -61,21 +61,25 @@
             tools:ignore="MissingConstraints" />
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/settings">
 
     <androidx.cardview.widget.CardView
         style="@style/cardViewStyle"
-        android:id="@+id/theme_change"
-        android:layout_width="0dp"
+        android:id="@+id/theme_change_card"
+        android:layout_width="match_parent"
         app:cardCornerRadius="15dp"
         app:cardElevation="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="25dp"
         android:layout_marginRight="25dp"
         android:layout_marginTop="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/settings"
         tools:ignore="MissingConstraints">
 
         <LinearLayout
@@ -119,18 +123,14 @@
 
     <androidx.cardview.widget.CardView
         style="@style/cardViewStyle"
-        android:id="@+id/biometric_authentication"
-        android:layout_width="0dp"
+        android:id="@+id/biometric_authentication_card"
+        android:layout_width="match_parent"
         app:cardCornerRadius="15dp"
         app:cardElevation="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="25dp"
         android:layout_marginRight="25dp"
         android:layout_marginTop="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/theme_change"
         tools:ignore="MissingConstraints">
 
         <LinearLayout
@@ -176,18 +176,14 @@
 
     <androidx.cardview.widget.CardView
         style="@style/cardViewStyle"
-        android:id="@+id/auto_save"
-        android:layout_width="0dp"
+        android:id="@+id/auto_save_card"
+        android:layout_width="match_parent"
         app:cardCornerRadius="15dp"
         app:cardElevation="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="25dp"
         android:layout_marginRight="25dp"
         android:layout_marginTop="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/biometric_authentication"
         tools:ignore="MissingConstraints">
 
         <LinearLayout
@@ -235,17 +231,13 @@
         android:id="@+id/about_card"
         style="@style/cardViewStyle"
         android:foreground="?attr/selectableItemBackground"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         app:cardCornerRadius="15dp"
         app:cardElevation="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="25dp"
         android:layout_marginRight="25dp"
-        android:layout_marginTop="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/auto_save"
+        android:layout_marginTop="20dp"
         tools:ignore="MissingConstraints">
 
         <LinearLayout
@@ -288,6 +280,8 @@
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
