@@ -1,6 +1,7 @@
 package com.minimal.notes.ui
 
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
@@ -41,6 +42,10 @@ class SettingsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener
             it.setOnCheckedChangeListener { _, isChecked ->
                 sharedPreferences.edit().putBoolean("isAutoSaveEnabled", isChecked).apply()
             }
+        }
+
+        binding.aboutCard.setOnClickListener {
+            startActivity(Intent(this, AboutActivity::class.java))
         }
 
 

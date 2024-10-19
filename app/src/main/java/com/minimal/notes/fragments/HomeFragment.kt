@@ -98,7 +98,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), AdapterView.OnItemClickLi
         val layout = inflater.inflate(R.layout.custom_menu, null)
         popupWindow = PopupWindow(layout, 600, WindowManager.LayoutParams.WRAP_CONTENT, true)
         val menuList = layout.findViewById<ListView>(R.id.menu_list)
-        menuItems = mutableListOf("Grid View", "Settings", "About")
+        menuItems = mutableListOf("Grid View", "Settings")
 
         if (getLayoutPreference()) {
             menuItems[0] = "List view"
@@ -180,11 +180,6 @@ class HomeFragment : Fragment(R.layout.fragment_home), AdapterView.OnItemClickLi
             startActivity(intent)
             popupWindow.dismiss()
 
-        }
-        2 -> {
-            val intent = Intent(context, AboutActivity::class.java)
-            startActivity(intent)
-            popupWindow.dismiss()
         }
         }
     }
