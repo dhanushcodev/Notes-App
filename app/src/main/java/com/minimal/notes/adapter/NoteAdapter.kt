@@ -5,25 +5,41 @@ import android.graphics.PorterDuff
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.minimal.notes.R
 import com.minimal.notes.databinding.NoteItemBinding
 import com.minimal.notes.fragments.HomeFragmentDirections
 import com.minimal.notes.model.Note
 
+@Suppress("IMPLICIT_CAST_TO_ANY")
 class NoteAdapter(private val onNoteClickListener: OnNoteClickListener) :
     RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
 
     interface OnNoteClickListener {
-        fun onNoteClick(currentNote:Note)
+        fun onNoteClick(currentNote: Note)
         fun onNoteLongClick(currentNote: Note)
+        fun onSelectionModeChange(selectedCount: Int)
     }
 
     inner class NoteViewHolder(val itemBinding: NoteItemBinding) :
         RecyclerView.ViewHolder(itemBinding.root)
 
     private var notesList = emptyList<Note>() // List to hold your notes
+    private var selectedNotes = mutableSetOf<Note>()
+    private var isSelectionMode = false
+
+    // Add method to get selected notes
+    fun getSelectedNotes(): Set<Note> = selectedNotes
+
+    // Add method to clear selection
+    fun clearSelection() {
+        selectedNotes.clear()
+        isSelectionMode = false
+        notifyDataSetChanged()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder {
         return NoteViewHolder(
@@ -40,14 +56,24 @@ class NoteAdapter(private val onNoteClickListener: OnNoteClickListener) :
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
         val currentNote = notesList[position]
 
+        val context = holder.itemView.context
+
+        // Update the visual state based on selection
+        if (selectedNotes.contains(currentNote)) {
+            holder.itemBinding.noteItem.strokeWidth = 4
+            holder.itemBinding.noteItem.setCardBackgroundColor(ContextCompat.getColor(context, R.color.selectedNoteColor))
+        } else {
+            holder.itemBinding.noteItem.strokeWidth = 0
+            holder.itemBinding.noteItem.setCardBackgroundColor(ContextCompat.getColor(context, R.color.unSelectedNoteColor))
+        }
 
         if (currentNote.noteTitle.isEmpty()) {
             holder.itemBinding.titleContainer.visibility = View.GONE
-        }else{
+        } else {
             holder.itemBinding.titleContainer.visibility = View.VISIBLE
         }
         holder.itemBinding.textviewNoteTitle.text = currentNote.noteTitle
-        holder.itemBinding.textviewNoteSubtitle.text = currentNote.noteSubtitle
+        holder.itemBinding.textviewNoteSubtitle.text = "#Tag"
         holder.itemBinding.textviewNoteContent.text = currentNote.noteContent
 
         val colors = listOf(
@@ -62,18 +88,49 @@ class NoteAdapter(private val onNoteClickListener: OnNoteClickListener) :
             getColor("#ff9966")
         )
 
+
         holder.itemBinding.noteColor.background.setColorFilter(
             colors.random(), PorterDuff.Mode.SRC_IN
         )
 
         holder.itemView.setOnClickListener {
-            onNoteClickListener.onNoteClick(currentNote)
+            if (isSelectionMode) {
+                toggleNoteSelection(currentNote)
+            } else {
+                onNoteClickListener.onNoteClick(currentNote)
+            }
         }
 
         holder.itemView.setOnLongClickListener {
             onNoteClickListener.onNoteLongClick(currentNote)
+            if (!isSelectionMode) {
+                isSelectionMode = true
+//                toggleNoteSelection(currentNote)
+            }
             true
         }
+    }
+
+    fun toggleNoteSelection(note: Note) {
+        if (selectedNotes.contains(note)) {
+            selectedNotes.remove(note)
+        } else {
+            selectedNotes.add(note)
+        }
+        
+        if (selectedNotes.isEmpty()) {
+            isSelectionMode = false
+        }
+        
+        onNoteClickListener.onSelectionModeChange(selectedNotes.size)
+        notifyDataSetChanged()
+    }
+
+    fun selectAllNotes() {
+        selectedNotes.addAll(notesList)
+        isSelectionMode = true
+        onNoteClickListener.onSelectionModeChange(selectedNotes.size)
+        notifyDataSetChanged()
     }
 
     // Function to update the notes list and refresh the adapter

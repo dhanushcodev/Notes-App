@@ -44,7 +44,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:padding="9dp"
-                app:srcCompat="@drawable/ic_back_black" />
+                app:srcCompat="@drawable/ic_back" />
         </androidx.cardview.widget.CardView>
 
         <TextView

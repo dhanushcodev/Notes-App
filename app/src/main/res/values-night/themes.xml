@@ -24,7 +24,7 @@
     </style>
 
     <style name="tagCardStyle">
-        <item name="android:backgroundTint" />
+        <item name="android:backgroundTint">#E4E5E9</item>
     </style>
 
     <style name="tagListStyle">
@@ -49,7 +49,7 @@
     </style>
 
     <style name="noteItemStyle">
-        <item name="android:backgroundTint">#272727</item>
+<!--        <item name="android:backgroundTint">#272727</item>-->
     </style>
 
     <style name="CustomBottomSheetDialogTheme" parent="Theme.Material3.Dark.BottomSheetDialog">
@@ -72,5 +72,7 @@
     <style name="dividerStyle">
         <item name="android:background">#616161</item>
     </style>
-
+    <color name="selectedNoteColor">#16D1BCFF</color>
+    <color name="unSelectedNoteColor" tools:ignore="MissingDefaultResource">#A8272727</color>
+    <color name="strokeColor" tools:ignore="MissingDefaultResource">#59D1BCFF</color>
 </resources>

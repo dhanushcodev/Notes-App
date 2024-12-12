@@ -77,6 +77,10 @@ class SearchFragment : Fragment() {
                 view?.let { it1 -> showBottomSheet(it1, notesViewModel, currentNote) }
             }
 
+            override fun onSelectionModeChange(selectedCount: Int) {
+                noteAdapter.clearSelection()
+            }
+
         })
         setUpSearchView()
         setUpRecyclerView()

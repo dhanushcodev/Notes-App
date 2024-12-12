@@ -9,13 +9,15 @@
         android:background="@android:color/transparent"
         android:padding="5dp">
 
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/note_item"
-            style="@style/noteItemStyle"
+            app:cardBackgroundColor="@color/unSelectedNoteColor"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             app:cardCornerRadius="20dp"
             app:cardElevation="0dp"
+            app:strokeColor="@color/strokeColor"
+            app:strokeWidth="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -90,8 +92,8 @@
                         android:paddingTop="2dp"
                         android:paddingBottom="2dp"
                         android:text="Subtitle"
-                        android:textColor="#808080"
                         android:textSize="10sp" />
+<!--    optional color for text view  "#808080"-->
                     </androidx.cardview.widget.CardView>
                     <View
                         android:layout_weight="2"
@@ -110,7 +112,7 @@
             </LinearLayout>
 
 
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

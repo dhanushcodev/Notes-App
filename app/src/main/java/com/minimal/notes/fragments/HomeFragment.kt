@@ -21,13 +21,15 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.minimal.notes.ui.AboutActivity
+import com.google.android.material.appbar.AppBarLayout
+import com.google.android.material.snackbar.Snackbar
 import com.minimal.notes.ui.MainActivity
 import com.minimal.notes.R
 import com.minimal.notes.ui.SettingsActivity
 import com.minimal.notes.adapter.NoteAdapter
 import com.minimal.notes.databinding.FragmentHomeBinding
 import com.minimal.notes.model.Note
+import com.minimal.notes.utils.DeleteDialog
 import com.minimal.notes.viewmodel.NoteViewModel
 
 
@@ -40,6 +42,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), AdapterView.OnItemClickLi
     private lateinit var noteAdapter: NoteAdapter
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var menuItems: MutableList<String>
+    private var actionMode:Boolean = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -64,18 +67,54 @@ class HomeFragment : Fragment(R.layout.fragment_home), AdapterView.OnItemClickLi
         notesViewModel = (activity as MainActivity).noteViewModel
 
         noteAdapter = NoteAdapter(
-            object :NoteAdapter.OnNoteClickListener{
+            object : NoteAdapter.OnNoteClickListener {
                 override fun onNoteClick(currentNote: Note) {
-                    val direction = HomeFragmentDirections.actionHomeFragmentToUpdateNoteFragment(currentNote)
-                    findNavController().navigate(direction)
+                    if (!actionMode) {
+                        val direction = HomeFragmentDirections
+                            .actionHomeFragmentToUpdateNoteFragment(currentNote)
+                        findNavController().navigate(direction)
+                    } else {
+                        toggleSelection(currentNote)
+                    }
                 }
 
                 override fun onNoteLongClick(currentNote: Note) {
-                    view?.let { it1 -> showBottomSheet(it1, notesViewModel, currentNote) }
+                    if (!actionMode) {
+                        startSelectionMode()
+                        toggleSelection(currentNote)
+                    }
                 }
 
+                override fun onSelectionModeChange(selectedCount: Int) {
+                    when (selectedCount) {
+                        0 -> {
+                            endSelectionMode()
+                        }
+                        1 -> {
+                            if (!actionMode) {
+                                startSelectionMode()
+                            }
+                            binding.selectCount.text= "$selectedCount Note Selected"
+                        }
+                        else -> {
+                            binding.selectCount.text = "$selectedCount Notes Selected"
+                        }
+                    }
+                }
             }
         )
+
+        binding.backButton.setOnClickListener {
+            endSelectionMode()
+        }
+
+        binding.deleteButton.setOnClickListener {
+            deleteSelectedNotes()
+        }
+
+        binding.selectAll.setOnClickListener {
+            noteAdapter.selectAllNotes()
+        }
 
         binding.addNote.setOnClickListener {
             it.findNavController().navigate(
@@ -184,9 +223,73 @@ class HomeFragment : Fragment(R.layout.fragment_home), AdapterView.OnItemClickLi
         }
     }
 
+    private fun deleteSelectedNotes() {
+        val selectedNotes = noteAdapter.getSelectedNotes()
+        DeleteDialog.showDialog(
+            requireContext(),
+            {
+                selectedNotes.forEach { note ->
+                    notesViewModel.deleteNote(note)
+                }
+                Snackbar.make(
+                    binding.root,
+                    when(selectedNotes.size){
+                        1 -> "${selectedNotes.size} Note Deleted"
+                        else -> "${selectedNotes.size} Notes Deleted"
+                    },
+                    Snackbar.LENGTH_SHORT
+                ).show()
+                endSelectionMode()
+            },
+            {
+
+            }
+        )
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+    }
+
+    private fun startSelectionMode() {
+        val params = binding.toolbar.layoutParams as AppBarLayout.LayoutParams
+        // Set new scroll flags
+        params.scrollFlags = 0
+
+        binding.toolbar.layoutParams = params
+
+        binding.backButton.visibility = View.VISIBLE
+        binding.deleteButton.visibility = View.VISIBLE
+        binding.selectCount.visibility = View.VISIBLE
+        binding.selectAll.visibility = View.VISIBLE
+        binding.appTitle.visibility = View.GONE
+        binding.noteSearch.visibility = View.GONE
+        binding.mainMenu.visibility = View.GONE
+        actionMode=true
+    }
+//
+    private fun endSelectionMode(){
+    binding.backButton.visibility = View.GONE
+    binding.deleteButton.visibility = View.GONE
+    binding.selectCount.visibility = View.GONE
+    binding.selectAll.visibility = View.GONE
+    binding.appTitle.visibility = View.VISIBLE
+    binding.noteSearch.visibility = View.VISIBLE
+    binding.mainMenu.visibility = View.VISIBLE
+    val params = binding.toolbar.layoutParams as AppBarLayout.LayoutParams
+
+    // Set new scroll flags
+    params.scrollFlags = AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL or
+            AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS
+
+    binding.toolbar.layoutParams = params
+    noteAdapter.clearSelection()
+    actionMode=false
+    }
+
+    private fun toggleSelection(note: Note) {
+        noteAdapter.toggleNoteSelection(note)
     }
 
 }

@@ -42,7 +42,7 @@
     </style>
 
     <style name="noteItemStyle">
-        <item name="android:backgroundTint">@color/white</item>
+<!--        <item name="android:backgroundTint">@color/white</item>-->
     </style>
 
     <style name="CustomBottomSheetDialogTheme" parent="Theme.Material3.Light.BottomSheetDialog">
@@ -65,5 +65,10 @@
     <style name="dividerStyle">
        <item name="android:background">#CCCCCC</item>
     </style>
+
+    <color name="selectedNoteColor">#16D1BCFF</color>
+    <color name="unSelectedNoteColor" tools:ignore="MissingDefaultResource">#79FFFFFF</color>
+    <color name="strokeColor">#59D1BCFF</color>
+
 
 </resources>

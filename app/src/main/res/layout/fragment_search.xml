@@ -55,7 +55,7 @@
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
                     android:visibility="gone"
-                    app:srcCompat="@drawable/ic_list_black" />
+                    app:srcCompat="@drawable/ic_list" />
 
                 <TextView
                     android:id="@+id/cancel"
