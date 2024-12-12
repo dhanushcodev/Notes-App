@@ -24,7 +24,7 @@
     </style>
 
     <style name="tagCardStyle">
-        <item name="android:backgroundTint">#E4E5E9</item>
+        <item name="android:backgroundTint"/>
     </style>
 
     <style name="tagListStyle">
