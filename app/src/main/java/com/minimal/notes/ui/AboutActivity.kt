@@ -1,7 +1,6 @@
 package com.minimal.notes.ui
 
 import android.content.Intent
-import android.content.pm.ActivityInfo
 import android.net.Uri
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
@@ -28,6 +27,13 @@ class AboutActivity : AppCompatActivity() {
         }
         binding.noteGithub.setOnClickListener{
             val url = "https://github.com/dhanushcodev/Notes-App"
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.data = Uri.parse(url)
+            startActivity(intent)
+        }
+
+        binding.developerInfo.setOnClickListener{
+            val url = "https://dhanushcodev.github.io/cv/"
             val intent = Intent(Intent.ACTION_VIEW)
             intent.data = Uri.parse(url)
             startActivity(intent)

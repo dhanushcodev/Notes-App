@@ -21,43 +21,43 @@
 #-renamesourcefileattribute SourceFile
 
 # Room
--keepclassmembers class * extends androidx.room.RoomDatabase {
-   *;
-}
--keepclassmembers interface androidx.room.** {
-   *;
-}
+#-keepclassmembers class * extends androidx.room.RoomDatabase {
+#   *;
+#}
+#-keepclassmembers interface androidx.room.** {
+#   *;
+#}
 -keepattributes Signature
 -keepattributes *Annotation*
 
 # ViewModel
--keep class androidx.lifecycle.ViewModel { *; }
+#-keep class androidx.lifecycle.ViewModel { *; }
 
 # View Binding and Data Binding
--keep class * extends androidx.databinding.ViewDataBinding { *; }
--keep class **BR { *; }
--keep class * extends androidx.databinding.ViewDataBinding { *; }
--keepclassmembers class * extends androidx.databinding.ViewDataBinding {
-    public static **[] getBindingAdapters(...);
-}
--keep class * extends androidx.databinding.BaseObservable { *; }
--keep class androidx.databinding.* { *; }
+#-keep class * extends androidx.databinding.ViewDataBinding { *; }
+#-keep class **BR { *; }
+#-keep class * extends androidx.databinding.ViewDataBinding { *; }
+#-keepclassmembers class * extends androidx.databinding.ViewDataBinding {
+#    public static **[] getBindingAdapters(...);
+#}
+#-keep class * extends androidx.databinding.BaseObservable { *; }
+#-keep class androidx.databinding.* { *; }
 
 # Your own model classes
 -keep class com.minimal.notes.model.** { *; }
 
 # Keep Hilt annotations
--keep class dagger.hilt.** { *; }
--keep class javax.inject.** { *; }
+#-keep class dagger.hilt.** { *; }
+#-keep class javax.inject.** { *; }
 
 # Keep Hilt-generated classes
--keep class * implements dagger.hilt.internal.GeneratedComponent { *; }
+#-keep class * implements dagger.hilt.internal.GeneratedComponent { *; }
 
 # Keep Hilt modules
--keep @dagger.Module class * { *; }
+#-keep @dagger.Module class * { *; }
 
 # Keep injected classes
--keepclassmembers,allowobfuscation class * {
-    @javax.inject.Inject <fields>;
-    @javax.inject.Inject <methods>;
-}
+#-keepclassmembers,allowobfuscation class * {
+#    @javax.inject.Inject <fields>;
+#    @javax.inject.Inject <methods>;
+#}

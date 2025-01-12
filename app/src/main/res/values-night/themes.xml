@@ -4,7 +4,7 @@
         <!-- Customize your dark theme here. -->
         <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
         <item name="android:statusBarColor">@android:color/transparent</item>
-
+        <item name="android:fontFamily">monospace</item>
     </style>
 
     <style name="mainBackground">
@@ -24,11 +24,11 @@
     </style>
 
     <style name="tagCardStyle">
-        <item name="android:backgroundTint"/>
+        //default card color
     </style>
 
     <style name="tagListStyle">
-        <item name="android:backgroundTint">@color/white</item>
+        <item name="android:backgroundTint">#BFBFBF</item>
     </style>
 
     <style name="tagListTextStyle">
@@ -75,4 +75,10 @@
     <color name="selectedNoteColor">#16D1BCFF</color>
     <color name="unSelectedNoteColor" tools:ignore="MissingDefaultResource">#A8272727</color>
     <color name="strokeColor" tools:ignore="MissingDefaultResource">#59D1BCFF</color>
+    <color name="selectedThemeCardColor" tools:ignore="MissingDefaultResource">#FFFFFF</color>
+    <color name="selectedThemeTextColor" tools:ignore="MissingDefaultResource">#000000</color>
+    <color name="unSelectedThemeTextColor" tools:ignore="MissingDefaultResource">#ffffff</color>
+    <color name="unSelectedThemeStrokeColor" tools:ignore="MissingDefaultResource">@android:color/darker_gray</color>
+
+    <color name="transparent" tools:ignore="MissingDefaultResource">@android:color/transparent</color>
 </resources>

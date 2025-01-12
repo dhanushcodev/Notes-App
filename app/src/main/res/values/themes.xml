@@ -2,6 +2,7 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.Notes" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:fontFamily">monospace</item>
     </style>
 
     <style name="mainBackground">
@@ -13,7 +14,7 @@
     </style>
 
     <style name="textViewStyleContent">
-        <item name="android:textColor">#E2000000</item>
+        <item name="android:textColor">#E2373737</item>
     </style>
 
     <style name="cardViewStyle">
@@ -25,7 +26,7 @@
     </style>
 
     <style name="tagListStyle">
-        <item name="android:backgroundTint">@color/black</item>
+        <item name="android:backgroundTint">#303030</item>
     </style>
 
     <style name="tagListTextStyle">
@@ -66,9 +67,14 @@
        <item name="android:background">#CCCCCC</item>
     </style>
 
-    <color name="selectedNoteColor">#16D1BCFF</color>
-    <color name="unSelectedNoteColor" tools:ignore="MissingDefaultResource">#79FFFFFF</color>
-    <color name="strokeColor">#59D1BCFF</color>
+    <color name="selectedNoteColor">#E4E5E9</color>
+    <color name="unSelectedNoteColor" tools:ignore="MissingDefaultResource">#FFFFFF</color>
+    <color name="strokeColor">#B0B0B1</color>
+    <color name="selectedThemeCardColor" tools:ignore="MissingDefaultResource">#000000</color>
+    <color name="selectedThemeTextColor" tools:ignore="MissingDefaultResource">#ffffff</color>
+    <color name="unSelectedThemeTextColor" tools:ignore="MissingDefaultResource">#000000</color>
+    <color name="unSelectedThemeStrokeColor" tools:ignore="MissingDefaultResource">@android:color/darker_gray</color>
+    <color name="transparent" tools:ignore="MissingDefaultResource">@android:color/transparent</color>
 
 
 </resources>
