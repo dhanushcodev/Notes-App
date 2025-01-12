@@ -28,6 +28,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.snackbar.Snackbar
 import com.minimal.notes.R
@@ -76,6 +77,9 @@ class UpdateNoteFragment : Fragment(R.layout.fragment_update_note) {
         binding.editSubtitleUpdate.text = currentNote.noteSubtitle
         binding.editNoteUpdate.setText(currentNote.noteContent)
 
+        binding.back.setOnClickListener {
+            findNavController().navigateUp()
+        }
 
         binding.editNoteUpdate.setOnTouchListener { v, event ->
             val action = event.action

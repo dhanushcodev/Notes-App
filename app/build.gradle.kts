@@ -16,7 +16,7 @@ android {
         applicationId = "com.minimal.notes"
         minSdk = 28
         targetSdk = 34
-        versionCode = 2
+        versionCode = 3
         versionName = "1.0.5"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -25,6 +25,7 @@ android {
     buildTypes {
         release {
             isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -50,7 +51,7 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
-    implementation("androidx.coordinatorlayout:coordinatorlayout:1.1.0")
+    implementation(libs.androidx.coordinatorlayout)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -64,10 +65,10 @@ dependencies {
     annotationProcessor(libs.androidx.room.compiler)
     kapt(libs.androidx.lifecycle.compiler)
     kapt(libs.androidx.room.compiler)
-    implementation("androidx.biometric:biometric:1.1.0")
+    implementation(libs.androidx.biometric)
     implementation(kotlin("script-runtime"))
-    implementation("me.saket:better-link-movement-method:2.2.0")
+    implementation(libs.better.link.movement.method)
 
-    implementation ("com.google.dagger:hilt-android:2.52")
-    kapt ("com.google.dagger:hilt-compiler:2.52")
+    implementation (libs.hilt.android)
+    kapt (libs.hilt.compiler)
 }

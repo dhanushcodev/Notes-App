@@ -1,10 +1,12 @@
 package com.minimal.notes.fragments
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.minimal.notes.ui.MainActivity
@@ -49,6 +51,15 @@ class NewNoteFragment : Fragment(R.layout.fragment_new_note) {
             view.findNavController().navigateUp()
         }
         binding.editSubtitleNew.text = formattedString
+
+        binding.editTitleNew.postDelayed({
+            val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            if (imm.isActive) {
+                imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0)
+            }
+            binding.editTitleNew.requestFocus()
+        }, 200)
+
         mview = view
 
     }

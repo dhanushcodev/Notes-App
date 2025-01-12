@@ -3,21 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        android:padding="5dp">
+<!--    <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:background="@android:color/transparent"-->
+<!--        android:padding="5dp">-->
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/note_item"
-            app:cardBackgroundColor="@color/unSelectedNoteColor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:cardCornerRadius="20dp"
-            app:cardElevation="0dp"
             app:strokeColor="@color/strokeColor"
-            app:strokeWidth="0dp"
+            android:layout_margin="5dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -29,17 +27,22 @@
             >
 
             <LinearLayout
+                android:id="@+id/note_item_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
+                android:background="@android:color/transparent"
                 android:orientation="vertical"
                 android:padding="20dp">
+
+
 
                 <LinearLayout
                     android:id="@+id/title_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
+                    android:paddingBottom="5dp"
+                    android:background="@android:color/transparent"
                     android:gravity="center_vertical|right"
                     android:orientation="horizontal">
 
@@ -51,6 +54,7 @@
                         android:layout_weight="2"
                         android:ellipsize="end"
                         android:maxLines="1"
+                        android:background="@android:color/transparent"
                         android:text="Note Title"
                         android:textSize="18sp"
                         android:textStyle="normal|bold" />
@@ -64,6 +68,7 @@
                     android:ellipsize="end"
                     android:fontWeight="100"
                     android:maxHeight="170dp"
+                    android:background="@android:color/transparent"
                     android:maxLines="7"
                     android:text="Note"
                     android:textSize="14sp" />
@@ -71,8 +76,9 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:paddingTop="10dp"
                     android:gravity="center_vertical"
+                    android:background="@android:color/transparent"
                     android:orientation="horizontal">
 
                     <androidx.cardview.widget.CardView
@@ -115,5 +121,5 @@
         </com.google.android.material.card.MaterialCardView>
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+<!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
 </layout>

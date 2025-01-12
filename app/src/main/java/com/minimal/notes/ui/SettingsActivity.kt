@@ -7,9 +7,11 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
+import com.google.android.material.card.MaterialCardView
 import com.minimal.notes.R
 import com.minimal.notes.biometric.BiometricPromptManager
 import com.minimal.notes.databinding.ActivitySettingsBinding
@@ -32,6 +34,8 @@ class SettingsActivity : AppCompatActivity() {
             finish()
         }
 
+        setThemeSelected()
+
         binding.autoSaveSwitch.let {
             it.isChecked = sharedPreferences.getBoolean("isAutoSaveEnabled", false)
             it.setOnCheckedChangeListener { _, isChecked ->
@@ -43,10 +47,18 @@ class SettingsActivity : AppCompatActivity() {
             startActivity(Intent(this, AboutActivity::class.java))
         }
 
-        binding.themeChangeCard.setOnClickListener {
-            startActivity(Intent(this, ThemeChangeActivity::class.java))
+
+        binding.themeCardSystem.setOnClickListener{
+            selectCard(binding.themeCardSystem)
         }
 
+        binding.themeCardLight.setOnClickListener{
+            selectCard(binding.themeCardLight)
+        }
+
+        binding.themeCardDark.setOnClickListener{
+            selectCard(binding.themeCardDark)
+        }
 
         val isBio = sharedPreferences.getBoolean("isBiometricEnabled", false)
 
@@ -79,6 +91,56 @@ class SettingsActivity : AppCompatActivity() {
         }
     }
 
+    private fun selectCard(selectedCard: MaterialCardView){
+        resetCards()
+        when(selectedCard){
+            binding.themeCardSystem -> {
+                sharedPreferences.edit().putInt("themeMode", AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+                    .apply()
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+                binding.themeCardSystemText.setTextColor(getColor(R.color.selectedThemeTextColor))
+            }
+            binding.themeCardLight -> {
+                sharedPreferences.edit().putInt("themeMode", AppCompatDelegate.MODE_NIGHT_NO).apply()
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                binding.themeCardLightText.setTextColor(getColor(R.color.selectedThemeTextColor))
+            }
+            binding.themeCardDark -> {
+                sharedPreferences.edit().putInt("themeMode", AppCompatDelegate.MODE_NIGHT_YES).apply()
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                binding.themeCardDarkText.setTextColor(getColor(R.color.selectedThemeTextColor))
+            }
+        }
+        selectedCard.setCardBackgroundColor(getColor(R.color.selectedThemeCardColor))
+        selectedCard.strokeWidth = 0
+    }
+
+    private fun resetCards(){
+        val cards = arrayOf(binding.themeCardSystem, binding.themeCardLight, binding.themeCardDark)
+        for (card in cards){
+            card.setCardBackgroundColor(getColor(R.color.transparent))
+            card.strokeWidth = 3
+        }
+        binding.themeCardSystemText.setTextColor(getColor(R.color.unSelectedThemeTextColor))
+        binding.themeCardLightText.setTextColor(getColor(R.color.unSelectedThemeTextColor))
+        binding.themeCardDarkText.setTextColor(getColor(R.color.unSelectedThemeTextColor))
+    }
+
+    private fun setThemeSelected() {
+        val theme =
+            sharedPreferences.getInt("themeMode", AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+        when (theme) {
+            AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM -> {
+                selectCard(binding.themeCardSystem)
+            }
+            AppCompatDelegate.MODE_NIGHT_NO -> {
+                selectCard(binding.themeCardLight)
+            }
+            else -> {
+                selectCard(binding.themeCardDark)
+            }
+        }
+    }
 
 
 }

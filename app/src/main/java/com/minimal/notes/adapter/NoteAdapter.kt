@@ -1,20 +1,18 @@
 package com.minimal.notes.adapter
 
+import android.annotation.SuppressLint
 import android.graphics.Color
 import android.graphics.PorterDuff
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.minimal.notes.R
 import com.minimal.notes.databinding.NoteItemBinding
-import com.minimal.notes.fragments.HomeFragmentDirections
 import com.minimal.notes.model.Note
 
-@Suppress("IMPLICIT_CAST_TO_ANY")
 class NoteAdapter(private val onNoteClickListener: OnNoteClickListener) :
     RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
 
@@ -53,6 +51,7 @@ class NoteAdapter(private val onNoteClickListener: OnNoteClickListener) :
         return notesList.size
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
         val currentNote = notesList[position]
 
@@ -61,10 +60,13 @@ class NoteAdapter(private val onNoteClickListener: OnNoteClickListener) :
         // Update the visual state based on selection
         if (selectedNotes.contains(currentNote)) {
             holder.itemBinding.noteItem.strokeWidth = 4
-            holder.itemBinding.noteItem.setCardBackgroundColor(ContextCompat.getColor(context, R.color.selectedNoteColor))
+//            holder.itemBinding.noteItem.setCardBackgroundColor(ContextCompat.getColor(context, R.color.selectedNoteColor))
+            holder.itemBinding.noteItemLayout.background = ContextCompat.getDrawable(context, R.color.selectedNoteColor)
         } else {
             holder.itemBinding.noteItem.strokeWidth = 0
-            holder.itemBinding.noteItem.setCardBackgroundColor(ContextCompat.getColor(context, R.color.unSelectedNoteColor))
+//            holder.itemBinding.noteItem.setCardBackgroundColor(ContextCompat.getColor(context, R.color.unSelectedNoteColor))
+            holder.itemBinding.noteItemLayout.background = ContextCompat.getDrawable(context, R.color.unSelectedNoteColor)
+
         }
 
         if (currentNote.noteTitle.isEmpty()) {
@@ -73,7 +75,7 @@ class NoteAdapter(private val onNoteClickListener: OnNoteClickListener) :
             holder.itemBinding.titleContainer.visibility = View.VISIBLE
         }
         holder.itemBinding.textviewNoteTitle.text = currentNote.noteTitle
-        holder.itemBinding.textviewNoteSubtitle.text = "#Tag"
+        holder.itemBinding.textviewNoteSubtitle.text = "Tag"
         holder.itemBinding.textviewNoteContent.text = currentNote.noteContent
 
         val colors = listOf(
