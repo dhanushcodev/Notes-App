@@ -96,12 +96,12 @@ class SearchFragment : Fragment() {
 
         binding.searchBar.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextChange(newText: String?): Boolean {
-                    searchNote(newText)
+                    searchNote(newText?.trim())
                 return true
             }
 
             override fun onQueryTextSubmit(query: String?): Boolean {
-                searchNote(query)
+                searchNote(query?.trim())
                 return false
             }
         })

@@ -174,8 +174,9 @@
                 android:gravity="center_vertical"
                 tools:ignore="MissingConstraints">
 
-                <androidx.cardview.widget.CardView
+                <com.google.android.material.card.MaterialCardView
                     style="@style/tagListStyle"
+                    app:strokeWidth="0dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:cardElevation="0dp"
@@ -190,10 +191,10 @@
                         android:paddingEnd="15dp"
                         android:paddingBottom="7dp"
                         android:paddingTop="7dp"/>
-                </androidx.cardview.widget.CardView>
+                </com.google.android.material.card.MaterialCardView>
 
-                <androidx.cardview.widget.CardView
-                    style="@style/cardViewStyle"
+                <com.google.android.material.card.MaterialCardView
+                    app:cardBackgroundColor="@color/transparent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:cardElevation="0dp"
@@ -207,9 +208,9 @@
                         android:paddingEnd="15dp"
                         android:paddingBottom="7dp"
                         android:paddingTop="7dp"/>
-                </androidx.cardview.widget.CardView>
-                <androidx.cardview.widget.CardView
-                    style="@style/cardViewStyle"
+                </com.google.android.material.card.MaterialCardView>
+                <com.google.android.material.card.MaterialCardView
+                    app:cardBackgroundColor="@color/transparent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:cardElevation="0dp"
@@ -223,7 +224,7 @@
                         android:paddingEnd="15dp"
                         android:paddingBottom="7dp"
                         android:paddingTop="7dp"/>
-                </androidx.cardview.widget.CardView>
+                </com.google.android.material.card.MaterialCardView>
 
             </LinearLayout>
 

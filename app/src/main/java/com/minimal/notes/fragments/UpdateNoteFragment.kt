@@ -78,6 +78,9 @@ class UpdateNoteFragment : Fragment(R.layout.fragment_update_note) {
         binding.editNoteUpdate.setText(currentNote.noteContent)
 
         binding.back.setOnClickListener {
+            if (isAutoSave) {
+                updateNote(mView)
+            }
             findNavController().navigateUp()
         }
 
@@ -102,6 +105,7 @@ class UpdateNoteFragment : Fragment(R.layout.fragment_update_note) {
         binding.editNoteUpdate.movementMethod = BetterLinkMovementMethod.newInstance().apply {
             setOnLinkClickListener { textView, url ->
                 // Handle click or return false to let the framework handle this link.
+                showPopupMenu(textView,x.value!!,y.value!!,url)
                 true
             }
             setOnLinkLongClickListener { textView, url ->
@@ -184,11 +188,11 @@ class UpdateNoteFragment : Fragment(R.layout.fragment_update_note) {
         val subTitle = binding.editSubtitleUpdate.text.toString().trim()
         val content = binding.editNoteUpdate.text.toString().trim()
 
-        if (title != currentNote.noteTitle || content != currentNote.noteContent) {
+        if ((title != currentNote.noteTitle || content != currentNote.noteContent) && content.isNotEmpty()) {
             note = Note(currentNote.id, title, subTitle, content)
             notesViewModel.updateNote(note)
             view.findNavController().navigateUp()
-            Snackbar.make(view, "Note Updated", Snackbar.LENGTH_SHORT).show()
+            Snackbar.make(view, "Note Saved", Snackbar.LENGTH_SHORT).show()
         } else if (content.isEmpty()) {
             Snackbar.make(view, "Note is Empty", Snackbar.LENGTH_SHORT).show()
         } else {
