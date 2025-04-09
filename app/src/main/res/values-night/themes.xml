@@ -16,11 +16,11 @@
     </style>
 
     <style name="textViewStyleContent">
-        <item name="android:textColor">#CEFFFFFF</item>
+        <item name="android:textColor">#959699</item>
     </style>
 
     <style name="cardViewStyle">
-        <item name="android:backgroundTint">#1e1e1e</item>
+        <item name="android:backgroundTint">#121214</item>
     </style>
 
     <style name="tagCardStyle">
@@ -36,7 +36,7 @@
     </style>
 
     <style name="popupViewStyle">
-        <item name="android:backgroundTint">#393939</item>
+        <item name="android:backgroundTint">#1A1A1A</item>
     </style>
 
     <style name="iconStyle">
@@ -73,7 +73,7 @@
         <item name="android:background">#616161</item>
     </style>
     <color name="selectedNoteColor">#16D1BCFF</color>
-    <color name="unSelectedNoteColor" tools:ignore="MissingDefaultResource">#A8272727</color>
+    <color name="unSelectedNoteColor" tools:ignore="MissingDefaultResource">#121214</color>
     <color name="strokeColor" tools:ignore="MissingDefaultResource">#59D1BCFF</color>
     <color name="selectedThemeCardColor" tools:ignore="MissingDefaultResource">#FFFFFF</color>
     <color name="selectedThemeTextColor" tools:ignore="MissingDefaultResource">#000000</color>
@@ -81,4 +81,5 @@
     <color name="unSelectedThemeStrokeColor" tools:ignore="MissingDefaultResource">@android:color/darker_gray</color>
 
     <color name="transparent" tools:ignore="MissingDefaultResource">@android:color/transparent</color>
+    <color name="tagGroup" tools:ignore="MissingDefaultResource">#141414</color>
 </resources>

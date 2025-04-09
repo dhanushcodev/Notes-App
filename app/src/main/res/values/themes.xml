@@ -75,6 +75,7 @@
     <color name="unSelectedThemeTextColor" tools:ignore="MissingDefaultResource">#000000</color>
     <color name="unSelectedThemeStrokeColor" tools:ignore="MissingDefaultResource">@android:color/darker_gray</color>
     <color name="transparent" tools:ignore="MissingDefaultResource">@android:color/transparent</color>
+    <color name="tagGroup" tools:ignore="MissingDefaultResource">#E4E5E9</color>
 
 
 </resources>

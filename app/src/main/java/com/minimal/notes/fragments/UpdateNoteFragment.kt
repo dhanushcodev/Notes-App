@@ -35,6 +35,8 @@ import com.minimal.notes.R
 import com.minimal.notes.databinding.FragmentUpdateNoteBinding
 import com.minimal.notes.model.Note
 import com.minimal.notes.ui.MainActivity
+import com.minimal.notes.utils.DeleteDialog
+import com.minimal.notes.utils.LinkActionDialog
 import com.minimal.notes.viewmodel.NoteViewModel
 import me.saket.bettermovementmethod.BetterLinkMovementMethod
 
@@ -105,12 +107,15 @@ class UpdateNoteFragment : Fragment(R.layout.fragment_update_note) {
         binding.editNoteUpdate.movementMethod = BetterLinkMovementMethod.newInstance().apply {
             setOnLinkClickListener { textView, url ->
                 // Handle click or return false to let the framework handle this link.
-                showPopupMenu(textView,x.value!!,y.value!!,url)
+                context?.let { LinkActionDialog.showDialog(it,url,{
+                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                    startActivity(intent)
+                },{
+                    copyLinkToClipboard(url)
+                }) }
                 true
             }
             setOnLinkLongClickListener { textView, url ->
-                (textView as EditText).hideKeyboard()
-                showPopupMenu(textView,x.value!!,y.value!!,url)
               true
             }
         }
@@ -146,9 +151,11 @@ class UpdateNoteFragment : Fragment(R.layout.fragment_update_note) {
         var menuItems:MutableList<String>
         val inflater = LayoutInflater.from(context)
         val layout = inflater.inflate(R.layout.custom_menu, null)
-        popupWindow = PopupWindow(layout, 600, WindowManager.LayoutParams.WRAP_CONTENT, true)
+        popupWindow = PopupWindow(layout, WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT, true)
         val menuList = layout.findViewById<ListView>(R.id.menu_list)
-        menuItems = mutableListOf("Open","Copy")
+        var txt = url.replace("mailto:","")
+        txt = txt.replace("tel:","")
+        menuItems = mutableListOf("Open (${txt})","Copy (${txt})")
 
 
         val menuAdapter =

@@ -130,12 +130,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    app:cardCornerRadius="5dp">
+                    app:cardCornerRadius="7dp">
                     <TextView
                         android:id="@+id/theme_card_system_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="6dp"
+                        android:paddingEnd="6dp"
+                        android:paddingStart="6dp"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="8dp"
                         android:gravity="center"
                         android:text="System"/>
                 </com.google.android.material.card.MaterialCardView>
@@ -150,12 +153,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    app:cardCornerRadius="5dp">
+                    app:cardCornerRadius="7dp">
                     <TextView
                         android:id="@+id/theme_card_light_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="6dp"
+                        android:paddingEnd="6dp"
+                        android:paddingStart="6dp"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="8dp"
                         android:gravity="center"
                         android:text="Light"/>
                 </com.google.android.material.card.MaterialCardView>
@@ -170,12 +176,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    app:cardCornerRadius="5dp">
+                    app:cardCornerRadius="7dp">
                     <TextView
                         android:id="@+id/theme_card_dark_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="6dp"
+                        android:paddingEnd="6dp"
+                        android:paddingStart="6dp"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="8dp"
                         android:gravity="center"
                         android:text="Dark"/>
                 </com.google.android.material.card.MaterialCardView>

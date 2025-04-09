@@ -181,7 +181,7 @@
                     android:layout_height="wrap_content"
                     app:cardElevation="0dp"
                     android:layout_marginStart="5dp"
-                    app:cardCornerRadius="50dp">
+                    app:cardCornerRadius="8dp">
                     <TextView
                         style="@style/tagListTextStyle"
                         android:layout_width="wrap_content"
@@ -189,41 +189,42 @@
                         android:text="All Notes"
                         android:paddingStart="15dp"
                         android:paddingEnd="15dp"
-                        android:paddingBottom="7dp"
-                        android:paddingTop="7dp"/>
+                        android:paddingBottom="8dp"
+                        android:paddingTop="8dp"/>
                 </com.google.android.material.card.MaterialCardView>
-
                 <com.google.android.material.card.MaterialCardView
-                    app:cardBackgroundColor="@color/transparent"
+                    app:cardBackgroundColor="@color/tagGroup"
+                    app:strokeWidth="0dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:cardElevation="0dp"
                     android:layout_marginStart="5dp"
-                    app:cardCornerRadius="50dp">
+                    app:cardCornerRadius="8dp">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="work"
                         android:paddingStart="15dp"
                         android:paddingEnd="15dp"
-                        android:paddingBottom="7dp"
-                        android:paddingTop="7dp"/>
+                        android:paddingBottom="8dp"
+                        android:paddingTop="8dp"/>
                 </com.google.android.material.card.MaterialCardView>
                 <com.google.android.material.card.MaterialCardView
-                    app:cardBackgroundColor="@color/transparent"
+                    app:cardBackgroundColor="@color/tagGroup"
+                    app:strokeWidth="0dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:cardElevation="0dp"
                     android:layout_marginStart="5dp"
-                    app:cardCornerRadius="50dp">
+                    app:cardCornerRadius="8dp">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="fun"
                         android:paddingStart="15dp"
                         android:paddingEnd="15dp"
-                        android:paddingBottom="7dp"
-                        android:paddingTop="7dp"/>
+                        android:paddingBottom="8dp"
+                        android:paddingTop="8dp"/>
                 </com.google.android.material.card.MaterialCardView>
 
             </LinearLayout>

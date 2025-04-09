@@ -3,6 +3,7 @@ package com.minimal.notes.fragments
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -45,22 +46,31 @@ class NewNoteFragment : Fragment(R.layout.fragment_new_note) {
         val formattedString = formatter.format(date)
         notesViewModel = (activity as MainActivity).noteViewModel
         binding.done.setOnClickListener {
+            binding.done.hideKeyboard()
             saveNote()
         }
         binding.back.setOnClickListener {
-            view.findNavController().navigateUp()
+            binding.back.hideKeyboard()
+            view.findNavController().popBackStack()
         }
         binding.editSubtitleNew.text = formattedString
 
         binding.editTitleNew.postDelayed({
+            binding.editTitleNew.requestFocus()
             val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             if (imm.isActive) {
                 imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0)
             }
-            binding.editTitleNew.requestFocus()
+            Log.e("viewkeyboard", "callec ", )
         }, 200)
 
         mview = view
+
+    }
+
+    fun View.hideKeyboard() {
+        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(this.windowToken, 0)
 
     }
 
@@ -73,12 +83,19 @@ class NewNoteFragment : Fragment(R.layout.fragment_new_note) {
             val note = Note(0, noteTitle, noteSubtitle, noteContent)
             notesViewModel.addNote(note)
             Snackbar.make(mview, "Note Saved", Snackbar.LENGTH_SHORT).show()
-            mview.findNavController().navigateUp()
+            mview.findNavController().popBackStack()
         } else {
             Snackbar.make(mview, "Note is Empty", Snackbar.LENGTH_SHORT).show()
         }
 
 
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding.editTitleNew.clearFocus()
+        binding.editTitleNew.hideKeyboard()
+    }
+
 
 }

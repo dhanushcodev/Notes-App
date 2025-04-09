@@ -75,7 +75,7 @@ class NoteAdapter(private val onNoteClickListener: OnNoteClickListener) :
             holder.itemBinding.titleContainer.visibility = View.VISIBLE
         }
         holder.itemBinding.textviewNoteTitle.text = currentNote.noteTitle
-        holder.itemBinding.textviewNoteSubtitle.text = "Tag"
+//        holder.itemBinding.textviewNoteSubtitle.text = "Tag"
         holder.itemBinding.textviewNoteContent.text = currentNote.noteContent
 
         val colors = listOf(

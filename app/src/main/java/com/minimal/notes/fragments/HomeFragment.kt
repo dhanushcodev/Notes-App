@@ -19,6 +19,7 @@ import android.widget.PopupWindow
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.google.android.material.appbar.AppBarLayout
@@ -163,6 +164,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), AdapterView.OnItemClickLi
             Log.d("liststyle", value.toString() + "setup")
             if (value) {
                 layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+//                layoutManager = GridLayoutManager(context,2)
                 adapter = noteAdapter
             } else {
                 layoutManager = LinearLayoutManager(context)
@@ -199,17 +201,19 @@ class HomeFragment : Fragment(R.layout.fragment_home), AdapterView.OnItemClickLi
     override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         when(position){
         0 -> {
+//            if (binding.notesList.layoutManager is GridLayoutManager) {
             if (binding.notesList.layoutManager is StaggeredGridLayoutManager) {
                 binding.notesList.layoutManager =
                     LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
                 binding.notesList.adapter = noteAdapter
                 menuItems[0] = "Grid View"
             } else {
-                binding.notesList.layoutManager =
-                    StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+                binding.notesList.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+//                binding.notesList.layoutManager = GridLayoutManager(context,2)
                 binding.notesList.adapter = noteAdapter
                 menuItems[0] = "List View"
             }
+//            saveLayoutPreference(binding.notesList.layoutManager is GridLayoutManager)
             saveLayoutPreference(binding.notesList.layoutManager is StaggeredGridLayoutManager)
             (parent?.adapter as ArrayAdapter<*>).notifyDataSetChanged()
             popupWindow.dismiss()
